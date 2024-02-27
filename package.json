@@ -1,0 +1,24 @@
+{
+  "name": "hello-react",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "cohere-ai": "^7.7.5",
+    "file-loader": "^6.2.0",
+    "firebase": "^10.8.0",
+    "next": "14.1.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-router-dom": "^6.22.1",
+    "save-dev": "^0.0.1-security",
+    "styled-components": "^6.1.8",
+    "url-loader": "^4.1.1"
+  }
+}
