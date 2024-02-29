@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import {onAuthStateChanged,signOut } from 'firebase/auth';
-import {auth} from '../library/firebaseConfig';
+import {auth,db} from '../library/firebaseConfig';
 import { CohereClient } from 'cohere-ai';
 
 
@@ -24,7 +24,24 @@ const SearchPage = () => {
     })
     return ()=> Change();
   })
-  
+  const saveSearchHistory = async (searchTerm, results) => {
+  if (!user) return; // Ensure there is a logged-in user
+
+  const searchDoc = {
+    userId: user.uid, // Assuming 'user' object has 'uid' field
+    searchTerm: searchTerm,
+    timestamp: new Date(), // Saves the current timestamp
+    results: results // Optional: save search results if needed
+  };
+
+  try {
+    await db.collection('searchHistory').add(searchDoc);
+    console.log('Search history saved successfully');
+  } catch (error) {
+    console.error('Error saving search history: ', error);
+  }
+};
+
   const fetchCoherePrediction = async () => {
     if (!searchTerm.trim()) return; // Check if the searchTerm is not empty
   

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "-": "^0.0.1",
+    "@vercel/toolbar": "^0.1.11",
     "cohere-ai": "^7.7.5",
     "file-loader": "^6.2.0",
     "firebase": "^10.8.0",

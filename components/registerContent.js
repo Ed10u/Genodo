@@ -6,16 +6,15 @@ import {useRouter} from 'next/router'
 
 
 const RegisterContent = () => {
+    const router = useRouter();
     useEffect(()=>{
-        const Change=onAuthStateChanged(auth,(currentUser)=>{
-            setUser(currentUser);
-            if(auth.currentUser){
-                window.location.href = '/login';
+        onAuthStateChanged(auth,(currentUser)=>{
+            if (auth.currentUser) {
+                router.push('/searchPage');
             } else {
             }
         })
-        return ()=> Change();
-      })
+      },[router]);
     const [registerEmail,setRegisterEmail] = useState("");
     const [registerPassword,setRegisterPassword] = useState("");
     const [user,setUser] = useState({});
@@ -31,6 +30,7 @@ const RegisterContent = () => {
         try{
         const user = await createUserWithEmailAndPassword(auth,registerEmail,registerPassword);
         console.log(user);
+        router.push('/searchPage');g
         } catch(error){
             console.log(error.message);
         }
