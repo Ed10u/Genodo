@@ -1,4 +1,4 @@
-import Navbar from "@/components/NavbarSolid";
+import Navbar from "@/components/Navbar";
 import Register from "@/components/registerContent";
 import Footer from "@/components/Footer";
 
