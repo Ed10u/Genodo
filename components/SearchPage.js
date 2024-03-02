@@ -1,18 +1,19 @@
 import React, { useState,useEffect } from 'react';
-import styled from 'styled-components';
-import {onAuthStateChanged,signOut } from 'firebase/auth';
+import styled,{keyframes} from 'styled-components';
+import {onAuthStateChanged } from 'firebase/auth';
 import {auth,db} from '../library/firebaseConfig';
-import { CohereClient } from 'cohere-ai';
+import { collection, addDoc} from 'firebase/firestore'
+import ImageGallery from './ImageGallery';
+
 
 
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [SearchTermHelper, setSearchTermHelper] = useState([]);
+  const [resultListOfItem, setresultListOfItem] = useState([]);
   const [user,setUser] = useState({});
 
-  const [coherePrediction, setCoherePrediction] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(()=>{
     const Change=onAuthStateChanged(auth,(currentUser)=>{
@@ -20,119 +21,115 @@ const SearchPage = () => {
         if(!user){
             window.location.href = '/login';
         } else {
+          
         }
     })
     return ()=> Change();
   })
-  const saveSearchHistory = async (searchTerm, results) => {
-  if (!user) return; // Ensure there is a logged-in user
-
-  const searchDoc = {
-    userId: user.uid, // Assuming 'user' object has 'uid' field
-    searchTerm: searchTerm,
-    timestamp: new Date(), // Saves the current timestamp
-    results: results // Optional: save search results if needed
-  };
-
-  try {
-    await db.collection('searchHistory').add(searchDoc);
-    console.log('Search history saved successfully');
-  } catch (error) {
-    console.error('Error saving search history: ', error);
-  }
-};
-
-  const fetchCoherePrediction = async () => {
-    if (!searchTerm.trim()) return; // Check if the searchTerm is not empty
-  
-    setIsLoading(true);
-    try {
-        const cohere=new CohereClient({
-            token:"9HYNh54r9E46t287oIoqJI9P2MPk3LSRZNstFpT0"
-        })
-      const response = await cohere.generate({
-        model: "command",
-        prompt: `Explain ${searchTerm}.`,
-        maxTokens: 300,
-        temperature: 0.9,
-      });
-      setCoherePrediction(response.generations[0].text);
-    } catch (error) {
-      console.error("Error fetching prediction from Cohere:", error);
-      setCoherePrediction('Error fetching prediction.');
-    } finally {
-      setIsLoading(false); // Reset loading status regardless of success/failure
-      setSearchTerm("");
-      setSearchResults([]);
-    }
-  };
-  
-  
+ 
   const handleInputChange = (e) => {
+    setresultListOfItem([]);
+    setSearchTermHelper([]);
     const searchTerm = e.target.value;
     setSearchTerm(searchTerm);
-    if (coherePrediction) {
-        setCoherePrediction('');
-      }
+
     if (searchTerm.trim()) {
-        
-      const apiUrl = `https://clinicaltables.nlm.nih.gov/api/disease_names/v3/search?terms=${encodeURIComponent(searchTerm)}`;
+      const apiUrl = `https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?terms=${encodeURIComponent(searchTerm)}`;
       fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-          setSearchResults(data[3],console.log(data));
+          setSearchTermHelper(data[3]);//the name for the Searched Items
+          console.log(data);
         })
         .catch(error => {
           console.error("Error fetching data");
-          setSearchResults([]);
-        });
+          setSearchTermHelper([]);
+        })
+
     } else {
-      setSearchResults([]);
+      setSearchTermHelper([]);
     }
   };
-  const handleSearch = () => {
-    if (!searchTerm.trim()) return;
-     fetchCoherePrediction();
-  };
-  const SignOut = async()=>{
-    await signOut(auth);
-  };
+  
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    try{
+      await addDoc(collection(db,"searchHistory"),{
+        Email: auth.currentUser.email,
+        History: searchTerm,
+        timestamp:new Date(),
+      });
+    }catch(error){
+      console.error("Error:",error)
+    }
 
+
+    setSearchTermHelper([]);
+    if(searchTerm.trim()){
+      const apiUrl = `https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?terms=${encodeURIComponent(searchTerm)}&ef=info_link_data`;
+      fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        setresultListOfItem(data[2].info_link_data)
+        
+        console.log(data[2].info_link_data); //the link for the searched Item
+      })
+      .catch(error => {
+        console.error("Error fetching data");
+      })
+
+  } else {
+  }
+  };
+  
   return (
     <>
       <HomePageContainer>
-        <>User logged In: </>
-        {user?.email}
-        <Logout onClick={SignOut}> LogOut </Logout>
         <ButtonContainer>
           <ContentInput
-            placeholder="Enter your disease name"
+            placeholder="Enter disease name"
             value={searchTerm}
             onChange={handleInputChange}
           />
           <ContentButton onClick={handleSearch}>Search</ContentButton>
         </ButtonContainer>
         <CenteredContainer>
-        {isLoading && <p>Loading...</p>}
-      {coherePrediction && <p><GeneratedText>{coherePrediction}</GeneratedText></p>}
       </CenteredContainer>
           <ResultsContainer>
-            {searchResults.map((item, index) => (
+            {SearchTermHelper.map((item, index) => (
               <ResultItem key={index}>{item[0]}</ResultItem>
-              
             ))}
           </ResultsContainer>
+          <SearchedResultsContainer>
+            {(Array.isArray(resultListOfItem) ?resultListOfItem:[]).filter(item => item[0] && item[0].length > 0).map((item, index) => (
+            <Card key={index}>
+              <CardInner>
+                <CardFront>
+                  <CardImg>
+                  <ImageGallery searchQuery={item[0][1]}></ImageGallery>
+                  </CardImg>
+                  <CardText>
+                  {item[0][1]}
+                  </CardText>
+                </CardFront>
+                <CardBack>
+                  <a href={Array.isArray(item[0]) ? item[0][0] : '#'} target="_blank" rel="noopener noreferrer">
+                    Click me for Details
+                  </a>
+                </CardBack>
+              </CardInner>
+            </Card>
+      ))}
+          </SearchedResultsContainer>
       </HomePageContainer>
     </>
   );
   
 };
 
-
 const ResultsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
 `;
 
 const ResultItem = styled.div`
@@ -150,10 +147,11 @@ const HomePageContainer = styled.div`
   align-items: center;
   background-color: #f4fbfb;
   gap:20px;
+  
 `;
 
 const ButtonContainer = styled.div`
-  width: 30%;
+  width: 40%;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -178,13 +176,10 @@ const ContentButton = styled.button`
     transform: scale(1.008);
   }
 `;
-const Logout = styled.button`
-
-`
 
 const ContentInput = styled.input`
   width: 100%;
-  height: 50px;
+  height: 100%;
   background-color: #d9ebf4;
   border: none;
   border-radius: 6px;
@@ -195,15 +190,99 @@ const ContentInput = styled.input`
     outline: none;
   }
 `;
-const GeneratedText = styled.div`
-  width:70%;
-  gap:20px;
-  font-family: "Times New Roman", Times, serif;
-  font-size:25px;
-  `
 const CenteredContainer =styled.div`
-    display: flex;
+  display: flex;
   justify-content: center;
-  margin-left:370px;
 `
+const SearchedResultsContainer = styled.div`
+  display:flex;
+  jusfity-content:center;
+  flex-direction: row;
+  width:80%;
+  height:90%;
+  gap:5%
+
+`
+const slideCard = keyframes`
+from{
+    transform:translateY(100%);
+    opacity:0;
+}
+to{
+    transform:translateY(0);
+    opacity:1;
+}
+`;
+
+const Card = styled.div`
+  width: 20%;
+  height:60%;
+  perspective: 1000px;
+
+  opacity:0;
+
+  animation:${slideCard} 1s ease-in-out;
+  animation-delay:0.4s;
+  animation-duration:2s;
+  animation-fill-mode:forwards;
+`;
+
+const CardInner = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.999s;
+
+  ${Card}:hover & {
+    transform: rotateY(180deg);
+  }
+`;
+
+const CardFace = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border-radius: 10px;
+
+`;
+const CardImg = styled.div`
+  display:flex;
+  background-size: cover;
+  height:70%;
+  width:100%;
+`
+const CardText = styled.div`
+  background-color: rgb(87, 202, 195);
+  heigh:30%;
+  width:100%;
+  text-align:center;
+
+`
+
+const CardFront = styled(CardFace)`
+  display:flex;
+  flex-direction:column;
+  background-color:rgb(87, 202, 195);
+  color: #fff;
+  border: 10px solid rgb(87, 202, 195);
+  transform: rotateY(0deg);
+`;
+
+const CardBack = styled(CardFace)`
+  background-color: #79D4FF;
+  color: #fff;
+  border: 10px solid #79D4FF;
+  transform: rotateY(180deg);
+  text-align: center;
+  font-size:40px;
+`;
+
+
+
 export default SearchPage;

@@ -1,12 +1,12 @@
 import Navbar from "@/components/Navbar";
-import Content from "@/components/LearnMore";
+import History from "@/components/searchHistory";
 import Footer from "@/components/Footer";
 
-export default function learnMore() {
+export default function about() {
   return (
     <>
         <Navbar />
-        <Content />
+        <History />
         <Footer />
     </>
   )

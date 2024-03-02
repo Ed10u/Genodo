@@ -1,4 +1,4 @@
-import Navbar from "@/components/NavbarSolid";
+import Navbar from "@/components/Navbar";
 import AboutContent from "@/components/aboutContent";
 import Footer from "@/components/Footer";
 

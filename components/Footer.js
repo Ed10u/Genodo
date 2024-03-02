@@ -56,6 +56,7 @@ const Navigator = styled.a`
     color: white;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    text-decoration:none;
 
     &:hover{
         transform: scale(1.2);

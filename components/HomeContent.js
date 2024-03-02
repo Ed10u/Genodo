@@ -12,8 +12,8 @@ const HomeContent = () => {
     <>
     <HomePageContainer>
         <ContentContainer>
-           <Content>Get to know your gene for a Healthier Tomorrow</Content>
-           <SubContent>Genodo offers a portal to understanding your genetic predispositions without the need for any technical expertise.</SubContent>
+           <Content>Get to know the diseases for a Healthier Tomorrow</Content>
+           <SubContent>Genodo offers a portal to understanding the large variety of diseaes.</SubContent>
            <ButtonContainer>
             <ContentInput placeholder="Enter your Email"/>
             <ContentButton onClick={Register}>
@@ -26,17 +26,7 @@ const HomeContent = () => {
     </>
   );    
 };
-const SlideHome = keyframes`
-    from{
-        transfrom:translateY(100%);
-        opacity:0;
-    }
-    to{
-        transform:translateY(0%);
-        opacity:1;
-    }
 
-`
 const slideImg = keyframes`
 from{
     transform:translateY(100%);
@@ -49,6 +39,7 @@ to{
 `;
 const HomePageContainer = styled.div`
     display: flex;
+    position:relative;
     justify-content: center;
     flex-direction: row;
 
@@ -62,7 +53,7 @@ const HomePageContainer = styled.div`
     
     animation:${slideImg} 1s ease-in-out;
     animation-fill-mode:forwards;
-    `;
+    `;  
 
 const HomeImg = styled.img`
     width: 550px;
@@ -82,7 +73,7 @@ const SlideContent = keyframes`
         opacity:0;
 
     }
-    to{
+    to{     
         transform:translateY(0);
         opacity:1;
     }

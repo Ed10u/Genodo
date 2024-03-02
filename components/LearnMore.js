@@ -8,9 +8,12 @@ const LearnMore = () => {
     <>
     <HomePageContainer>
         <ContentContainer>
-           <Content>Genetic Testing</Content>
-           <SubContent>Our mission at GenoDo is to empower individuals with actionable genetic insights to lead healthier, longer lives. By leveraging cutting-edge technology and scientific research, we aim to make personalized health accessible to everyone. We believe in the transformative power of genetic data to not only predict health risks but also to provide proactive solutions for a better quality of life.</SubContent>
-           <SubContent>"GenoDo envisions a future where every health decision is informed by personal genetic data. Our vision is to be at the forefront of personalized medicine, where our innovations help bridge the gap between genetic information and actionable health strategies. We aspire to create a world where individuals can preemptively address health concerns, diseases are caught in their nascent stages, and everyone has access to personalized health optimization plans."</SubContent>
+           <Content>Definition</Content>
+           <SubContent>A disease is a condition that impairs the normal functioning of the body or mind. Diseases can affect any part of the body and can have various causes, including pathogens (like bacteria, viruses, and fungi), genetic mutations, environmental factors, lifestyle choices, and more.</SubContent>
+           <Content>Causes</Content>
+           <SubContent>The causes of diseases are as diverse as the diseases themselves. They can be classified into infectious causes (caused by pathogens), genetic causes (inherited or mutations), environmental causes (exposure to chemicals, radiation, etc.), and lifestyle causes (such as diet, physical inactivity, and smoking).</SubContent>
+           <Content>Symptoms</Content>
+           <SubContent>Symptoms are the signs or effects of a disease that are noticeable to the patient. These can range from mild to severe and vary widely depending on the disease. Common symptoms include fever, fatigue, pain, dizziness, and changes in weight or appetite, among others.</SubContent>
 
         </ContentContainer>
     </HomePageContainer>

@@ -1,16 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
-import Link from "next/link";
-
 
 const HomeContent = () => {
   return (
     <>
     <HomePageContainer>
         <ContentContainer>
-           <Content>Author:Xueyuan Xu</Content>
-           <SubContent>Our mission at GenoDo is to empower individuals with actionable genetic insights to lead healthier, longer lives. By leveraging cutting-edge technology and scientific research, we aim to make personalized health accessible to everyone. We believe in the transformative power of genetic data to not only predict health risks but also to provide proactive solutions for a better quality of life.</SubContent>
-           <SubContent>"GenoDo envisions a future where every health decision is informed by personal genetic data. Our vision is to be at the forefront of personalized medicine, where our innovations help bridge the gap between genetic information and actionable health strategies. We aspire to create a world where individuals can preemptively address health concerns, diseases are caught in their nascent stages, and everyone has access to personalized health optimization plans."</SubContent>
+           <Content>About GenoDo</Content>
+           <SubContentTitle>Empowering Your Health with Information</SubContentTitle>
+           <SubContent>At GenoDo, we believe that knowledge is the first step toward a healthier tomorrow. Our mission is to provide easy access to comprehensive information about various diseases, their symptoms, treatments, and preventive measures. Whether you're a healthcare professional, a patient, or someone looking to stay informed, GenoDo is your go-to resource for reliable, up-to-date disease information.</SubContent>
+           <SubContentTitle>Our Features</SubContentTitle>
+           <SubContent>Disease Search Engine: Instantly search for diseases by name to find detailed descriptions, symptoms, causes, and available treatments.</SubContent>
+           <SubContent>User-Friendly Interface: Our platform is designed with you in mind, ensuring that you can easily navigate and find the information you need without hassle.</SubContent>
+           <SubContent>Trusted Sources: All the information provided through GenoDo is meticulously sourced from reputable medical databases and institutions, ensuring that you receive accurate and current data.</SubContent>
+           <SubContent>Educational Resources: Beyond disease information, we offer resources aimed at promoting general health and well-being, empowering you to take charge of your health.</SubContent>
 
         </ContentContainer>
     </HomePageContainer>
@@ -18,6 +21,10 @@ const HomeContent = () => {
   );    
 };
 
+const SubContentTitle = styled.div`
+    font-weight:bold;
+    font-size:20px;
+`
 const HomePageContainer = styled.div`
     display: flex;
     justify-content: space-between;

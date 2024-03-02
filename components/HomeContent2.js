@@ -8,8 +8,8 @@ const HomeContent2 =()=>{
         <HomePageContainer2>
         <HomeImg2 src='./DNA.webp' alt = "Article Cover"/> 
         <ContentContainer2>
-        <Content2>What is a genetic testing?</Content2>
-        <SubContent2>A genetic testing is a medical test that identifies changes in chromosomes, genes, or proteins. The primary purpose of these tests is to find genetic disorders, assess the risk of developing certain diseases, and determine genetic predisposition to various conditions. Gene tests can be used for a variety of purpose</SubContent2>
+        <Content2>What are diseases?</Content2>
+        <SubContent2>A disease is a condition that impairs the normal functioning of the body or mind. Diseases can affect any part of the body and can have various causes, including pathogens (like bacteria, viruses, and fungi), genetic mutations, environmental factors, lifestyle choices, and more.</SubContent2>
         <ButtonContainer2>
             <LearnMore href="/learnMore">
                 learn more

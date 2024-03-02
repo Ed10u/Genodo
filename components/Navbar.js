@@ -1,17 +1,51 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react';
 import styled, {keyframes} from 'styled-components'
+import {onAuthStateChanged,signOut} from 'firebase/auth';
 import {auth} from '../library/firebaseConfig';
+import { useRouter } from 'next/router'
+
 
 const Navbar = () => {
+    const [loggedUser, setLoggedUser] = useState("LogIn");
+    const router = useRouter();
+
+    useEffect(() => { 
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setLoggedUser(user.email);
+            } else {
+                setLoggedUser("LogIn");
+                
+            }
+        });
+    },[]); 
+    const handleLogout = async () => {
+        await signOut(auth);
+        setLoggedUser("LogIn");
+      };
+    const handleSearchHistory = async () => {
+        console.log("hahaha");
+
+        router.push('/searchHistory');
+    };
+      
   return (
     <>
     <Container>
-        <Icon src='./icon.png'></Icon>
-        <WebsiteName>GenoDo</WebsiteName>
+        <WebName>
+            <Icon src='./icon.png'></Icon>
+            <WebsiteName>GenoDo</WebsiteName>
+        </WebName>
         <NavigationButtonContainer>
             <Navigator href="/">Home</Navigator>
             <Navigator href = "/about">About</Navigator>
-            <Login href = "/login">Login</Login>
+            <LoginContainer>
+                <Login href ="/login">{loggedUser}</Login>
+                <DropdownMenu>
+                    <SearchHistory onClick={handleSearchHistory}>Search History</SearchHistory>
+                  <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>                
+                </DropdownMenu>
+              </LoginContainer>   
         </NavigationButtonContainer>
     </Container>
     </>
@@ -19,10 +53,14 @@ const Navbar = () => {
 }
 
 const Icon = styled.img`
-    width:40px;
-    height:40px;
+    width:7%;
+    height:90%;
 `;
-
+const WebName = styled.div`
+    display:flex;
+    flex-direction:row;
+    width:30%;
+`
 const slideIn = keyframes`
     from{
         transform: translateY(-100%);
@@ -34,7 +72,7 @@ const slideIn = keyframes`
     };
 `;
 const Container = styled.div`
-    width: 90vw;
+    width: 90%;
     background-color: white;
     opacity:0;
 
@@ -60,13 +98,13 @@ const WebsiteName = styled.div`
     font-size: 2.2vw;
     font-weight: bold;
     color: rgb(87,202,195);
-    padding-right:59vw;
 `
 
 const NavigationButtonContainer = styled.div`
+    width:30%;
     display: flex;
     justify-content: space-between;
-    width: 20%;
+    flex-direction: row;
     background-color: white;
     padding-top:0.75vw;`;
 
@@ -83,4 +121,41 @@ const Navigator = styled.a`
     }`;
 const Login = styled(Navigator)`
     `
+const LoginContainer = styled.div`
+  position: relative;
+  display: inline-block;
+  &:hover{
+    transform: scale(1.2);
+`;
+
+const DropdownMenu = styled.div`
+  display: none;
+  position:absolute;
+  background-color: #f9f9f9;
+  width:100%;
+  padding: 12px 16px;
+  z-index: 1000;
+
+  ${LoginContainer}:hover & {
+    display: block;
+  }
+`;
+const LogoutButton = styled.button`
+  background-color:white;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height:30%;
+  font-weight:bold;
+    color:#79D4FF;
+  border:none;
+
+  &:hover{
+    transform: scale(1.2);
+`;
+
+const SearchHistory = styled(LogoutButton)`
+`
+
 export default Navbar
