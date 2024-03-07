@@ -4,7 +4,6 @@ import ContentPage2 from"@/components/HomeContent2";
 import styled,{keyframes} from 'styled-components'
 import React from 'react'
 import {useRouter} from 'next/router'
-
 export default function index() {
   const router = useRouter();
 
@@ -15,6 +14,9 @@ export default function index() {
     <>
         <Navbar />
         <HomePageContainer>
+          <VideoBackground autoPlay muted loop>
+            <source src = './BackGVideo.mp4' type="video/mp4"/>
+          </VideoBackground>
         <ContentContainer>
            <Content>Get to know the diseases for a Healthier Tomorrow</Content>
            <SubContent>Genodo offers a portal to understanding the large variety of diseaes.</SubContent>
@@ -25,7 +27,6 @@ export default function index() {
             </ContentButton>
            </ButtonContainer>
         </ContentContainer>
-        <HomeImg src='./doctor.webp' alt = "Article Cover"/> 
         </HomePageContainer>
         <ContentPage2 />
         <Footer />
@@ -33,7 +34,17 @@ export default function index() {
   )
 }
 
-const slideImg = keyframes`
+const VideoBackground = styled.video`
+  width: 100%;
+  height: auto;
+  position:absolute;
+
+  min-width:100%
+  min-height:100%
+  z-index:-1;
+`;
+
+const SlideImg = keyframes`
 from{
     transform:translateY(100%);
     opacity:0;
@@ -48,30 +59,20 @@ const HomePageContainer = styled.div`
     position:relative;
     justify-content: center;
     flex-direction: row;
+    overflow:hidden;
 
     width: 90.9vw;
+    height: 39vw;
     background-color: #f4fbfb;
 
-    padding-top: 2vw;
-    padding-bottom: 10vw;
+    padding-bottom: 2vw;
     padding-right: 4vw;
     padding-left: 4vw;
     
-    animation:${slideImg} 1s ease-in-out;
+    animation:${SlideImg} 1s ease-in-out;
     animation-fill-mode:forwards;
     `;  
 
-const HomeImg = styled.img`
-    width: 550px;
-    margin-left:auto;
-    padding-top: 1vw;
-    opacity:0;
-
-    animation:${slideImg} 1s ease-in-out;
-    animation-delay:0.4s;
-    animation-duration:2s;
-    animation-fill-mode:forwards;
-`;
 //
 const SlideContent = keyframes`
     from{
@@ -85,11 +86,13 @@ const SlideContent = keyframes`
     }
 `
 const Content = styled.div`
-    font-family:"FreeMono", sans-serif;
+    font-family:"Georgia", serif;
     font-size: 57px;
     font-weight:bold;    
     padding-bottom:1vw;
     opacity:0;
+    color: white;
+    width:90%;
 
     animation: ${SlideContent} 1s ease-in-out;
     animation-duration:1s;
@@ -105,8 +108,8 @@ const ContentContainer = styled.div`
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding-left: 9vw;
-
+    padding-right:20%;
+    padding-top:8vw;
 `;
 //contains input and the button
 const ButtonContainer = styled.div`
@@ -161,7 +164,7 @@ const SubContent = styled.div`
     padding-bottom:3vw;
     font-size:20px;
     font-family:"FreeMono",san-serf;
-    color: #696969;
+    color: #E8E9EB;
     opacity:0;
 
     animation: ${SlideContent} 1s ease-in-out;

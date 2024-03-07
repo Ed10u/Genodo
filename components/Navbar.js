@@ -81,8 +81,8 @@ const Container = styled.div`
     flex-direction: row;
 
 
-    padding-top: 2vw;
-    padding-bottom: 2vw;
+    padding-top: 0.8vw;
+    padding-bottom: 1vw;
     padding-right: 3vw;
     padding-left: 3vw;
 
@@ -106,7 +106,9 @@ const NavigationButtonContainer = styled.div`
     justify-content: space-between;
     flex-direction: row;
     background-color: white;
-    padding-top:0.75vw;`;
+    padding-top:0.75vw;
+
+    `;
 
 const Navigator = styled.a`
     font-size:1.3vw;
@@ -120,12 +122,13 @@ const Navigator = styled.a`
         transform: scale(1.2);
     }`;
 const Login = styled(Navigator)`
-    `
+
+`
 const LoginContainer = styled.div`
   position: relative;
   display: inline-block;
   &:hover{
-    transform: scale(1.2);
+    transform: scale(1.1);
 `;
 
 const DropdownMenu = styled.div`
