@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContentPage2 from"@/components/HomeContent2";
+import Preloader from "@/components/preloader"
 import styled,{keyframes} from 'styled-components'
 import React from 'react'
 import {useRouter} from 'next/router'
@@ -12,6 +13,7 @@ export default function index() {
   }
   return (
     <>
+       <Preloader/>
         <Navbar />
         <HomePageContainer>
           <VideoBackground autoPlay muted loop>
@@ -68,9 +70,9 @@ const HomePageContainer = styled.div`
     padding-bottom: 2vw;
     padding-right: 4vw;
     padding-left: 4vw;
-    
-    animation:${SlideImg} 1s ease-in-out;
-    animation-fill-mode:forwards;
+
+    animation: ${SlideImg} 1s ease-in-out;
+    animation-delay: 1.4s; 
     `;  
 
 //
@@ -96,7 +98,7 @@ const Content = styled.div`
 
     animation: ${SlideContent} 1s ease-in-out;
     animation-duration:1s;
-    animation-delay:0.4s;
+    animation-delay:1.7s;
     animation-fill-mode:forwards;
 
 `;
@@ -120,8 +122,8 @@ const ButtonContainer = styled.div`
     opacity:0;
     
     animation: ${SlideContent} 1s ease-in-out;
-    animation-delay:0.4s;
-    animation-duration:2s;
+    animation-delay:1.7s;
+    animation-duration:1.7s;
     animation-fill-mode:forwards;
 
 `//the button
@@ -168,8 +170,8 @@ const SubContent = styled.div`
     opacity:0;
 
     animation: ${SlideContent} 1s ease-in-out;
-    animation-delay:0.4s;
-    animation-duration:1.5s;
+    animation-delay:1.4s;
+    animation-duration:1.7s;
     animation-fill-mode:forwards;
 
 `
