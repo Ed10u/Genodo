@@ -87,7 +87,7 @@ const Container = styled.div`
     padding-left: 3vw;
 
     animation: ${slideIn} 1s ease-in-out;
-    animation-delay:2s;
+    animation-delay:1.8s;
     animation-duration: 2s;
     animation-fill-mode:forwards;
 
