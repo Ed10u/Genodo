@@ -30,9 +30,8 @@ export default function index() {
            <TextContainer2 $ValueOfScroll={ValueOfScroll}>
            <Content2>Mapping diseases in a glance.</Content2>
            </TextContainer2>
-           <SubContent>Genodo offers a portal to understanding the large variety of diseaes.</SubContent>
            <ButtonContainer>
-            <ContentInput placeholder="Enter your Email"/>
+            <ContentInput placeholder="Enter the disease name"/>
             <ContentButton onClick={Register}>
                 Get Started
             </ContentButton>
@@ -51,7 +50,7 @@ const VideoBackground = styled.video`
   height: auto;
   position:absolute;
   background-color: #f4fbfb;
-  opacity: ${props=>Math.max(1-0.01*Math.min(props.$ValueOfScroll,90)*100/90,0.3)};
+  opacity: ${props=>Math.max((1-0.01*Math.min(props.$ValueOfScroll,98)*100/98),0.3)};
 
   min-width:100%
   min-height:100%
@@ -110,7 +109,7 @@ const TextContainer2 = styled.div`
 opacity: ${props=>0.01*Math.min(props.$ValueOfScroll-10,10)*100/10};
 `
 const Content = styled.div`
-    font-size: 50px;
+    font-size: 60px;
     font-weight:bold;    
     padding-bottom:1vw;
     opacity:0;
@@ -128,11 +127,12 @@ const Content2 = styled(Content)`
 `
 //contains all contents
 const ContentContainer = styled.div`
-    width: 60%;
+    width: 100%;
     display: flex;
     justify-content: center;
+    align-items:center;
+
     flex-direction: column;
-    padding-right:40%;
     opacity: ${props=>1-0.01*Math.min(props.$ValueOfScroll-30,20)*100/20};
 
 `;
@@ -142,7 +142,7 @@ const ContentContainer = styled.div`
 //contains input and the button
 const ButtonContainer = styled.div`
     text-align:center;
-    width:60%;
+    width:30%;
     display:flex;
     flex-direction:row;
     opacity:0;
@@ -187,17 +187,3 @@ const ContentInput = styled.input`
 
 
 `//the text under main text
-const SubContent = styled.div`
-    width:80%;
-    padding-bottom:3vw;
-    font-size:1.5vw;
-    font-family:"FreeMono",san-serf;
-    color: black;
-    opacity:0;
-
-    animation: ${SlideContent} 1s ease-in-out;
-    animation-delay:1.4s;
-    animation-duration:1.7s;
-    animation-fill-mode:forwards;
-
-`
