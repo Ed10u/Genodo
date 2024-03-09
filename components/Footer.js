@@ -22,11 +22,14 @@ const Icon = styled.img`
 `
 const Container = styled.div`
     display: flex;
+    position:relative;
     justify-content: space-between;
     flex-direction: column;
     align-items:center;
     width: 90vw;
+    height:20vw;
     background-color: #212529;
+    z-index:30;
     padding-top: 2vw;
     padding-bottom: 2vw;
     padding-right: 5vw;

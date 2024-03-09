@@ -3,10 +3,10 @@ import styled, {keyframes} from 'styled-components'
 
 const SlideUp = keyframes`
     from{
-        transform: translate3d(1,1,1);
+        transform: translate3d(0,0,0);
     }
     to{
-        transform:translate3d(0,-100vh,0) rotateX(100deg);
+        transform:translate3d(0,-100vh,0) rotateX(90deg);
     };
 `;
 
@@ -16,11 +16,12 @@ const PreloaderContainer = styled.div`
     z-index:100;
     width:100%;
     height:100%;
+    overflow:hidden;
 
     display:flex;
     justify-content:center;
     align-items:center;
-    animation: ${SlideUp} 1s linear forwards;
+    animation: ${SlideUp} 1.3s ease-out forwards;
     animation-delay:1.5s;
 `
 
@@ -34,16 +35,27 @@ const TypingEffect = keyframes`
     }
 `;
 
+const SlideIcon = keyframes`
+    0%
+    {
+        transform: translate3d(0,0,0);
+    }
+    100%
+    {
+        transform:translate3d(0,71vh,0) rotateX(-30deg);
+    };
+`;
+
 
 const PreloaderText = styled.div`
     font-family:'Poppins', sans-serif;
     font-weight:bold;
-    font-size:10vw;
+    font-size:6vw;
     
-    position:relative;
+    position:absolute;
     color:white;
     -webkit-text-stroke: 0.2vw rgb(87,202,195);
-
+    
     &:before{
         content: attr(data-text);
         position:absolute;
@@ -57,6 +69,8 @@ const PreloaderText = styled.div`
         animation-fill-mode:forwards;
 
     }
+    animation:${SlideIcon} 0.56s linear forwards 1.5s;
+
     
 `;
 

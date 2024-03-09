@@ -3,12 +3,14 @@ import styled, {keyframes} from 'styled-components'
 import {onAuthStateChanged,signOut} from 'firebase/auth';
 import {auth} from '../library/firebaseConfig';
 import { useRouter } from 'next/router'
+import {useScrollValue} from '@/components/customHook/scrollValue'
 
 
 const Navbar = () => {
     const [loggedUser, setLoggedUser] = useState("LogIn");
     const router = useRouter();
-
+    const ValueOfScroll = useScrollValue();
+    console.log(-0.01*(Math.max(ValueOfScroll,25)-25)*100/75);
     useEffect(() => { 
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -24,17 +26,15 @@ const Navbar = () => {
         setLoggedUser("LogIn");
       };
     const handleSearchHistory = async () => {
-        console.log("hahaha");
-
         router.push('/searchHistory');
     };
       
   return (
     <>
-    <Container>
+    <Container $ValueOfScroll = {ValueOfScroll}>
         <WebName>
             <Icon src='./icon.png'></Icon>
-            <WebsiteName>GenoDo</WebsiteName>
+            <WebsiteName href="/">GenoDo</WebsiteName>
         </WebName>
         <NavigationButtonContainer>
             <Navigator href="/">Home</Navigator>
@@ -53,10 +53,11 @@ const Navbar = () => {
 }
 
 const Icon = styled.img`
-    width:7%;
+    width:9%;
     height:90%;
 `;
 const WebName = styled.div`
+    font-family: 'poppins-bold', sans-serif !important;
     display:flex;
     flex-direction:row;
     width:30%;
@@ -72,32 +73,37 @@ const slideIn = keyframes`
     };
 `;
 const Container = styled.div`
-    width: 90%;
+    width:92.9vw;
     background-color: white;
     opacity:0;
+    position:sticky;
+    top:0;
+    z-index:1;
 
     display: flex;
     justify-content: space-between;
     flex-direction: row;
 
 
-    padding-top: 0.8vw;
-    padding-bottom: 1vw;
+    padding-top: 0.3vw;
+    padding-bottom: 0.7vw;
     padding-right: 3vw;
     padding-left: 3vw;
 
-    animation: ${slideIn} 1s ease-in-out;
+    animation: ${slideIn} 1s ease-in-out forwards;
     animation-delay:1.8s;
     animation-duration: 2s;
-    animation-fill-mode:forwards;
 
-
+    translate: 0 ${props => -1*(Math.max(props.$ValueOfScroll,20)-20)*100/20}%;
 `;
+//(oldValue-oldMin)*newRange/oldRange+newMin
 
-const WebsiteName = styled.div`
+const WebsiteName = styled.a`
     font-size: 2.2vw;
     font-weight: bold;
     color: rgb(87,202,195);
+
+    text-decoration:none;
 `
 
 const NavigationButtonContainer = styled.div`
@@ -107,6 +113,9 @@ const NavigationButtonContainer = styled.div`
     flex-direction: row;
     background-color: white;
     padding-top:0.75vw;
+
+    translate: 0 cal(-1%*(max(var(--scroll),25)-25)*100/75);
+
 
     `;
 

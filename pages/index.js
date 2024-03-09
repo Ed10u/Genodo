@@ -1,26 +1,35 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContentPage2 from"@/components/HomeContent2";
-import Preloader from "@/components/preloader"
-import styled,{keyframes} from 'styled-components'
-import React from 'react'
-import {useRouter} from 'next/router'
+import Preloader from "@/components/preloader";
+import styled,{keyframes} from 'styled-components';
+import React,{useEffect,useState} from 'react';
+import {useRouter} from 'next/router';
+import {useScrollValue} from '@/components/customHook/scrollValue'
+
+
 export default function index() {
   const router = useRouter();
-
+  const ValueOfScroll = useScrollValue();
   const Register= async ()=>{
       router.push('/login')
-  }
+  };
+  
   return (
     <>
        <Preloader/>
         <Navbar />
         <HomePageContainer>
-          <VideoBackground autoPlay muted loop>
-            <source src = './BackGVideo.mp4' type="video/mp4"/>
+          <VideoBackground $ValueOfScroll={ValueOfScroll} autoPlay muted loop>
+            <source src = './BackGdVideo.mp4' type="video/mp4"/>
           </VideoBackground>
-        <ContentContainer>
-           <Content>Get to know the diseases for a Healthier Tomorrow</Content>
+        <ContentContainer $ValueOfScroll={ValueOfScroll}>
+          <TextContainer $ValueOfScroll={ValueOfScroll}>
+           <Content>Explore health with a click</Content>
+           </TextContainer>
+           <TextContainer2 $ValueOfScroll={ValueOfScroll}>
+           <Content2>Mapping diseases in a glance.</Content2>
+           </TextContainer2>
            <SubContent>Genodo offers a portal to understanding the large variety of diseaes.</SubContent>
            <ButtonContainer>
             <ContentInput placeholder="Enter your Email"/>
@@ -32,6 +41,7 @@ export default function index() {
         </HomePageContainer>
         <ContentPage2 />
         <Footer />
+        
     </>
   )
 }
@@ -40,6 +50,8 @@ const VideoBackground = styled.video`
   width: 100%;
   height: auto;
   position:absolute;
+  background-color: #f4fbfb;
+  opacity: ${props=>Math.max(1-0.01*Math.min(props.$ValueOfScroll,90)*100/90,0.3)};
 
   min-width:100%
   min-height:100%
@@ -48,34 +60,36 @@ const VideoBackground = styled.video`
 
 const SlideImg = keyframes`
 from{
-    transform:translateY(100%);
+    transform:translate3d(0,100vh,0) rotateX(100deg);
     opacity:0;
 }
 to{
-    transform:translateY(0);
+    transform:translate3d(0,0,0);
     opacity:1;
 }
 `;
 const HomePageContainer = styled.div`
+    font-family: 'poppins-bold', sans-serif !important;
     display: flex;
-    position:relative;
+    position:sticky;
+    top:0;
+    
     justify-content: center;
     flex-direction: row;
     overflow:hidden;
 
     width: 90.9vw;
-    height: 39vw;
+    height: 49vw;
     background-color: #f4fbfb;
 
     padding-bottom: 2vw;
     padding-right: 4vw;
     padding-left: 4vw;
 
-    animation: ${SlideImg} 1s ease-in-out;
-    animation-delay: 1.4s; 
-    `;  
+    animation: ${SlideImg} 1.5s ease-out;
+    animation-delay: 0.8s; 
+    `;
 
-//
 const SlideContent = keyframes`
     from{
         transform:translateX(-100%);
@@ -87,14 +101,21 @@ const SlideContent = keyframes`
         opacity:1;
     }
 `
+const TextContainer = styled.div`
+  opacity: ${props=>1-0.01*Math.min(props.$ValueOfScroll,10)*100/10};
+;
+
+`
+const TextContainer2 = styled.div`
+opacity: ${props=>0.01*Math.min(props.$ValueOfScroll-10,10)*100/10};
+`
 const Content = styled.div`
-    font-family:"Georgia", serif;
-    font-size: 57px;
+    font-size: 50px;
     font-weight:bold;    
     padding-bottom:1vw;
     opacity:0;
     color: white;
-    width:90%;
+    width:100%;
 
     animation: ${SlideContent} 1s ease-in-out;
     animation-duration:1s;
@@ -102,21 +123,26 @@ const Content = styled.div`
     animation-fill-mode:forwards;
 
 `;
-    
+const Content2 = styled(Content)`
+
+`
 //contains all contents
 const ContentContainer = styled.div`
-    font-family:"bold", sans-serif;
-    width: 50%;
+    width: 60%;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding-right:20%;
-    padding-top:8vw;
+    padding-right:40%;
+    opacity: ${props=>1-0.01*Math.min(props.$ValueOfScroll-30,20)*100/20};
+
 `;
+    //translate based on the scroll
+    //value (oldVal-oldMin) *newRange/oldRange+newMin
+//
 //contains input and the button
 const ButtonContainer = styled.div`
     text-align:center;
-    width:80%;
+    width:60%;
     display:flex;
     flex-direction:row;
     opacity:0;
@@ -150,7 +176,7 @@ const ContentInput = styled.input`
     background-color:#d9ebf4;
     border:none;
     border-radius:6px;/* make the boarder round*/
-    font-size:16px;
+    font-size:17px;
     padding-left:15px;
 
     &:focus{
@@ -164,9 +190,9 @@ const ContentInput = styled.input`
 const SubContent = styled.div`
     width:80%;
     padding-bottom:3vw;
-    font-size:20px;
+    font-size:1.5vw;
     font-family:"FreeMono",san-serf;
-    color: #E8E9EB;
+    color: black;
     opacity:0;
 
     animation: ${SlideContent} 1s ease-in-out;
