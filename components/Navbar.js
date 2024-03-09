@@ -10,7 +10,6 @@ const Navbar = () => {
     const [loggedUser, setLoggedUser] = useState("LogIn");
     const router = useRouter();
     const ValueOfScroll = useScrollValue();
-    console.log(-0.01*(Math.max(ValueOfScroll,25)-25)*100/75);
     useEffect(() => { 
         onAuthStateChanged(auth, (user) => {
             if (user) {

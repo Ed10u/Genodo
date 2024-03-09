@@ -50,7 +50,7 @@ const VideoBackground = styled.video`
   height: auto;
   position:absolute;
   background-color: #f4fbfb;
-  opacity: ${props=>Math.max((1-0.01*Math.min(props.$ValueOfScroll,98)*100/98),0.3)};
+  opacity: ${props=>(1-0.01*Math.min(props.$ValueOfScroll,98)*100/98)};
 
   min-width:100%
   min-height:100%
@@ -106,7 +106,7 @@ const TextContainer = styled.div`
 
 `
 const TextContainer2 = styled.div`
-opacity: ${props=>0.01*Math.min(props.$ValueOfScroll-10,10)*100/10};
+  opacity: ${props=>0.01*Math.min(props.$ValueOfScroll-10,10)*100/10};
 `
 const Content = styled.div`
     font-size: 60px;
@@ -142,7 +142,7 @@ const ContentContainer = styled.div`
 //contains input and the button
 const ButtonContainer = styled.div`
     text-align:center;
-    width:30%;
+    width:40%;
     display:flex;
     flex-direction:row;
     opacity:0;
@@ -151,6 +151,7 @@ const ButtonContainer = styled.div`
     animation-delay:1.7s;
     animation-duration:1.7s;
     animation-fill-mode:forwards;
+
 
 `//the button
 const ContentButton = styled.button`
