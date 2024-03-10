@@ -3,8 +3,7 @@ import styled,{keyframes} from 'styled-components';
 import {onAuthStateChanged } from 'firebase/auth';
 import {auth,db} from '../library/firebaseConfig';
 import { collection, addDoc} from 'firebase/firestore'
-import ImageGallery from './ImageGallery';
-
+import ImageGallery from './customHook/ImageGallery';
 
 
 
@@ -13,7 +12,6 @@ const SearchPage = () => {
   const [SearchTermHelper, setSearchTermHelper] = useState([]);
   const [resultListOfItem, setresultListOfItem] = useState([]);
   const [user,setUser] = useState({});
-
 
   useEffect(()=>{
     const Change=onAuthStateChanged(auth,(currentUser)=>{
@@ -31,15 +29,16 @@ const SearchPage = () => {
     setresultListOfItem([]);
     setSearchTermHelper([]);
     const searchTerm = e.target.value;
+    console.log(searchTerm);
     setSearchTerm(searchTerm);
 
     if (searchTerm.trim()) {
-      const apiUrl = `https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?terms=${encodeURIComponent(searchTerm)}`;
+      const apiUrl = `https://clinicaltables.nlm.nih.gov/api/icd11_codes/v3/search?terms=${encodeURIComponent(searchTerm)}`;
       fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
           setSearchTermHelper(data[3]);//the name for the Searched Items
-          console.log(data);
+          console.log(data[3]);
         })
         .catch(error => {
           console.error("Error fetching data");
@@ -66,13 +65,13 @@ const SearchPage = () => {
 
     setSearchTermHelper([]);
     if(searchTerm.trim()){
-      const apiUrl = `https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?terms=${encodeURIComponent(searchTerm)}&ef=info_link_data`;
+      const apiUrl = `https://clinicaltables.nlm.nih.gov/api/icd11_codes/v3/search?terms=${encodeURIComponent(searchTerm)}&ef=definition`;
       fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        setresultListOfItem(data[2].info_link_data)
+        setresultListOfItem(data[3])
         
-        console.log(data[2].info_link_data); //the link for the searched Item
+        console.log(data[3]); //the link for the searched Item
       })
       .catch(error => {
         console.error("Error fetching data");
@@ -97,7 +96,7 @@ const SearchPage = () => {
       </CenteredContainer>
           <ResultsContainer>
             {SearchTermHelper.map((item, index) => (
-              <ResultItem key={index}>{item[0]}</ResultItem>
+              <ResultItem key={index}>{item[1]}</ResultItem>
             ))}
           </ResultsContainer>
           <SearchedResultsContainer>

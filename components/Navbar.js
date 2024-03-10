@@ -93,7 +93,7 @@ const Container = styled.div`
     animation-delay:1.8s;
     animation-duration: 2s;
 
-    translate: 0 ${props => -1*(Math.max(props.$ValueOfScroll,20)-20)*100/20}%;
+    translate: 0 ${props => Math.max(-1*(Math.max(props.$ValueOfScroll,20)-20)*100/20,-100)}%;
 `;
 //(oldValue-oldMin)*newRange/oldRange+newMin
 

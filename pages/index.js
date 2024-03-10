@@ -6,6 +6,8 @@ import styled,{keyframes} from 'styled-components';
 import React,{useEffect,useState} from 'react';
 import {useRouter} from 'next/router';
 import {useScrollValue} from '@/components/customHook/scrollValue'
+import Cards from"@/components/HomeContent3";
+
 
 
 export default function index() {
@@ -39,23 +41,26 @@ export default function index() {
         </ContentContainer>
         </HomePageContainer>
         <ContentPage2 />
+        <Cards />
         <Footer />
         
     </>
   )
 }
 
-const VideoBackground = styled.video`
-  width: 100%;
-  height: auto;
-  position:absolute;
-  background-color: #f4fbfb;
-  opacity: ${props=>(1-0.01*Math.min(props.$ValueOfScroll,98)*100/98)};
-
-  min-width:100%
-  min-height:100%
-  z-index:-1;
-`;
+const VideoBackground = styled.video.attrs(props => ({
+    style: {
+      opacity: 1 - 0.01 * Math.min(props.$ValueOfScroll, 98) * 100 / 98,
+    }
+  }))`
+    width: 100%;
+    height: auto;
+    position: absolute;
+    background-color: #f4fbfb;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+  `;
 
 const SlideImg = keyframes`
 from{
@@ -101,12 +106,22 @@ const SlideContent = keyframes`
     }
 `
 const TextContainer = styled.div`
-  opacity: ${props=>1-0.01*Math.min(props.$ValueOfScroll,10)*100/10};
+        opacity: ${props => {
+        const startFadeAt = 0;
+        const endFadeAt = 10;
+        const scroll = Math.min(Math.max(props.$ValueOfScroll, startFadeAt), endFadeAt);
+        return (1-(scroll - startFadeAt) / (endFadeAt - startFadeAt));
+    }};
 ;
 
 `
 const TextContainer2 = styled.div`
-  opacity: ${props=>0.01*Math.min(props.$ValueOfScroll-10,10)*100/10};
+    opacity: ${props => {
+        const startFadeAt = 10;
+        const endFadeAt = 20;
+        const scroll = Math.min(Math.max(props.$ValueOfScroll, startFadeAt), endFadeAt);
+        return ((scroll - startFadeAt) / (endFadeAt - startFadeAt));
+    }};
 `
 const Content = styled.div`
     font-size: 60px;
@@ -133,8 +148,12 @@ const ContentContainer = styled.div`
     align-items:center;
 
     flex-direction: column;
-    opacity: ${props=>1-0.01*Math.min(props.$ValueOfScroll-30,20)*100/20};
-
+    opacity: ${props => {
+        const startFadeAt = 30;
+        const endFadeAt = 50;
+        const scroll = Math.min(Math.max(props.$ValueOfScroll, startFadeAt), endFadeAt);
+        return 1 - ((scroll - startFadeAt) / (endFadeAt - startFadeAt));
+    }};
 `;
     //translate based on the scroll
     //value (oldVal-oldMin) *newRange/oldRange+newMin

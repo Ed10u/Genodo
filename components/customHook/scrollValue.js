@@ -9,7 +9,6 @@ export function useScrollValue() {
       const htmlElement = document.documentElement;
       const percentOfScreenHeightScrolled = htmlElement.scrollTop / htmlElement.clientHeight;
       const scrollValue = Math.min(percentOfScreenHeightScrolled * 100,1000);
-      console.log(scrollValue);
       htmlElement.style.setProperty("--scroll", scrollValue);
       setScrollValue(scrollValue); // Directly set the numeric value
     }
