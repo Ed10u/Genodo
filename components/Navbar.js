@@ -40,10 +40,6 @@ const Navbar = () => {
             <Navigator href = "/about">About</Navigator>
             <LoginContainer>
                 <Login href ="/login">{loggedUser}</Login>
-                <DropdownMenu>
-                    <SearchHistory onClick={handleSearchHistory}>Search History</SearchHistory>
-                  <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>                
-                </DropdownMenu>
               </LoginContainer>   
         </NavigationButtonContainer>
     </Container>
@@ -139,18 +135,6 @@ const LoginContainer = styled.div`
     transform: scale(1.1);
 `;
 
-const DropdownMenu = styled.div`
-  display: none;
-  position:absolute;
-  background-color: #f9f9f9;
-  width:100%;
-  padding: 12px 16px;
-  z-index: 1000;
-
-  ${LoginContainer}:hover & {
-    display: block;
-  }
-`;
 const LogoutButton = styled.button`
   background-color:white;
   padding: 10px 20px;
@@ -165,8 +149,5 @@ const LogoutButton = styled.button`
   &:hover{
     transform: scale(1.2);
 `;
-
-const SearchHistory = styled(LogoutButton)`
-`
 
 export default Navbar

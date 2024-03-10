@@ -9,9 +9,6 @@ const HomeContent3 =()=>{
     const router = useRouter();
     const [style, setStyle] = useState({ opacity: 0, translateY: '300px' });
     const [diseases, setDiseases] = useState([]);
-    const Register= async ()=>{
-        router.push('/login')
-    };
 
     useEffect(() => {
         const diseaseKeywords = [
@@ -48,7 +45,7 @@ const HomeContent3 =()=>{
             const fetchedDiseases = [];
             const attemptedDiseases = new Set();
         
-            while (fetchedDiseases.length < 5 && attemptedDiseases.size < diseaseKeywords.length) {
+            while (fetchedDiseases.length < 10 && attemptedDiseases.size < diseaseKeywords.length) {
                 const randomIndex = Math.floor(Math.random() * diseaseKeywords.length);
                 const randomDisease = diseaseKeywords[randomIndex];
 
@@ -81,7 +78,7 @@ const HomeContent3 =()=>{
 
         fetchDiseaseInfo();
       const handleScroll = () => {
-        const shouldBeVisible = window.scrollY > 800;
+        const shouldBeVisible = window.scrollY > 1000;
         if (shouldBeVisible) {
           setStyle({ opacity: 1, translateY: '0px' });
         } else {
@@ -114,17 +111,17 @@ const HomeContent3 =()=>{
     );
     };
 
-
-
 const HomePageContainer2 = styled.div`
 
     font-family: 'poppins-bold', sans-serif !important;
     font-weight: bold;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    gap:20%;
+    align-items: center;
     
-    height: 80vw;
-
+    height: 70vw;
     z-index: 2;
     position:relative;
 `;
@@ -138,6 +135,7 @@ const TopHalfContainer = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:center;
+
     
     position: relative;
     gap: 2rem;

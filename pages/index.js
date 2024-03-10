@@ -7,6 +7,7 @@ import React,{useEffect,useState} from 'react';
 import {useRouter} from 'next/router';
 import {useScrollValue} from '@/components/customHook/scrollValue'
 import Cards from"@/components/HomeContent3";
+import ContentPage4 from "@/components/HomeContent4"
 
 
 
@@ -35,13 +36,14 @@ export default function index() {
            <ButtonContainer>
             <ContentInput placeholder="Enter the disease name"/>
             <ContentButton onClick={Register}>
-                Get Started
+                Search
             </ContentButton>
            </ButtonContainer>
         </ContentContainer>
         </HomePageContainer>
         <ContentPage2 />
         <Cards />
+        <ContentPage4/>
         <Footer />
         
     </>

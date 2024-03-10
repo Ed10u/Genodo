@@ -1,9 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
+import {useScrollValue} from '@/components/customHook/scrollValue'
+
+
 const Footer = () => {
+    const ValueOfScroll = useScrollValue();
+    console.log(ValueOfScroll);
+    
   return (
     <>
-    <Container>
+    <Container $ValueOfScroll = {ValueOfScroll}>
         <Icon src='./icon.png'></Icon>
         <WebsiteName>GenoDo</WebsiteName>
         <NavigationButtonContainer>
@@ -34,6 +40,8 @@ const Container = styled.div`
     padding-bottom: 2vw;
     padding-right: 5vw;
     padding-left: 3.8vw;
+
+
 `
 
 const WebsiteName = styled.div`
