@@ -24,7 +24,7 @@ const RegisterContent = () => {
         })
         return ()=> Change();
         
-      })
+      },[])
 
     const Register= async ()=>{
         try{

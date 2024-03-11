@@ -11,7 +11,7 @@ const SlideUp = keyframes`
 `;
 
 const PreloaderContainer = styled.div`
-    position:absolute;
+    position:fixed;
     background-color:white;
     z-index:100;
     width:100%;

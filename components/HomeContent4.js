@@ -9,7 +9,7 @@ const HomeContent4 =()=>{
 
     useEffect(() => {
       const handleScroll = () => {
-        const shouldBeVisible = window.scrollY > 1000;
+        const shouldBeVisible = window.scrollY > 3000;
         if (shouldBeVisible) {
           setStyle({ opacity: 1, translateY: '0px' });
         } else {
@@ -22,8 +22,13 @@ const HomeContent4 =()=>{
     }, []);
     return (
         <>
-        <HomePageContainer2>
-            <TopHalfContainer opacity={style.opacity} $translateY={style.translateY}>
+        <HomePageContainer2 opacity={style.opacity} $translateY={style.translateY}>
+          <DiscrpitionWrapper>
+            <Title>GenoDo is an innovative health management platform</Title>
+            <Discrpition>It is designed to empower individuals in their health and wellness journey. The app is divided into several key areas, each serving a unique purpose in the user's health exploration journey.</Discrpition>
+            </DiscrpitionWrapper>
+            <TopHalfContainer>
+            <Cards>
             <CardWarpper>
                 <LeftCards>
                     <LeftTopCard>
@@ -63,18 +68,44 @@ const HomeContent4 =()=>{
                 <RightCards>
                 <RightCard>
                     <Cardheading>
-                    Interactive Content
+                    Comprehensive Health Database
                         </Cardheading>
                         <CardContent>
-                        With tools like the Symptom Checker and visually rich infographics and videos, GenoDo turns complex medical information into engaging, understandable content. These resources are designed not just to inform but to enhance understanding and retention, making health education interactive and enjoyable.                        </CardContent>
+                        Vast Information Access: Users have access to an extensive database from WHO covering a wide range of diseases, symptoms, and wellness topics, enabling them to gather information on various health conditions from one centralized platform.
+Intelligent Search Features: The central search bar with autocomplete functionality makes finding specific health information quicker and more intuitive, enhancing the user experience.</CardContent>
                     </RightCard>
                 </RightCards>
+                </Cards>
             </TopHalfContainer>
         </HomePageContainer2>
         </>
     );
     };
 
+const DiscrpitionWrapper = styled.div`
+display: flex;
+justify-content: center;
+height:30%;
+width:50%;
+align-items:center;
+text-align:center;
+flex-direction:column;
+padding-bottom:20rem;
+
+
+`
+const Title = styled.div`
+    font-size:4rem;
+    text-align:center;
+
+`
+const Discrpition = styled.div`
+    width:40%;
+    font-size:1.5rem;
+    text-align:center;
+    font-weight:normal;
+    padding-top:2rem;
+`
 const HomePageContainer2 = styled.div`
 
     font-family: 'poppins-bold', sans-serif !important;
@@ -82,29 +113,31 @@ const HomePageContainer2 = styled.div`
     display: flex;
     justify-content: center;
     flex-direction: column;
-    gap:2rem;
+    gap:5rem;
     align-items: center;
-    height: 70vw;
+    height: 100vw;
     z-index: 2;
     position:relative;
+    padding-top:20rem;
+
+    opacity: ${props => props.opacity};
+    transform: translateY(${props => props.$translateY});
+    transition: all 1s linear;
 `;
 
 
 const TopHalfContainer = styled.div`
     width:90.9%;
-    font-size:2.5vw;
+    font-size:2.5rem;
     text-align:center;
     color:black;
     display:flex;
     flex-direction:row;
-    gap:2rem;
+    height:70%;
+    padding-bottom:20rem;
 
     
     position: relative;
-
-    opacity: ${props => props.opacity};
-    transform: translateY(${props => props.$translateY});
-    transition: all 1s linear;
 `;
 
 const Cardheading = styled.div`
@@ -117,14 +150,14 @@ const Cardheading = styled.div`
 `;
 
 const CardContent = styled.div`
-  font-size: 14px;
+  font-size: 1.5rem;
   position: relative;
 
 `;
 
 const Card = styled.button`
   background-color: #B2DECA;
-  width: 400px;
+  width: 45rem;
   display: flex;
   flex-direction: column;
   border-radius: 2rem;
@@ -134,7 +167,7 @@ const Card = styled.button`
   transition: transform 0.5s ease;
   position: relative;
   overflow: hidden;
-  gap: 30px;
+  gap: 2rem;
   transform-origin: bottom;
 
   &:hover {
@@ -145,14 +178,15 @@ const LeftCards = styled.div`
   display:flex;
   flex-direction:row;
   gap:2rem;
+  height:50%;
 
 `
 const LeftTopCard = styled(Card)`
-  width:500px;
+  width:55rem;
   background-color:#FBFDD2;
 `
 const LeftBottomCard = styled(Card)`
-  width:300px;
+  width:35rem;
   background-color:#B2DECA;
 
 `
@@ -160,6 +194,8 @@ const CenterCards = styled.div`
 display:flex;
 flex-direction:row;
 gap:2rem;
+height:50%;
+
 `
 const CenterTopCard = styled(Card)`
 background-color:#F5A091;
@@ -172,6 +208,7 @@ background-color:#A8DAF4;
 const CardWarpper = styled.div`
 display:flex;
 flex-direction:column;
+position:relative;
 gap:2rem;
 `
 const RightCards = styled.div`
@@ -182,6 +219,10 @@ const RightCard = styled(Card)`
   background-color:#ABAEDB;
 
 `
-
+const Cards = styled.div`
+display:flex;
+flex-direction:row;
+gap:2rem;
+`
 
 export default HomeContent4;

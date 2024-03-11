@@ -6,8 +6,10 @@ import styled,{keyframes} from 'styled-components';
 import React,{useEffect,useState} from 'react';
 import {useRouter} from 'next/router';
 import {useScrollValue} from '@/components/customHook/scrollValue'
-import Cards from"@/components/HomeContent3";
-import ContentPage4 from "@/components/HomeContent4"
+import Cards from"@/components/Cards";
+import ContentPage4 from "@/components/HomeContent4";
+import Display from '@/components/fullLoginDisplay';
+
 
 
 
@@ -15,13 +17,14 @@ export default function index() {
   const router = useRouter();
   const ValueOfScroll = useScrollValue();
   const Register= async ()=>{
-      router.push('/login')
+      router.push('/searchPage')
   };
   
   return (
     <>
        <Preloader/>
         <Navbar />
+        <Display/>
         <HomePageContainer>
           <VideoBackground $ValueOfScroll={ValueOfScroll} autoPlay muted loop>
             <source src = './BackGdVideo.mp4' type="video/mp4"/>
@@ -79,6 +82,7 @@ const HomePageContainer = styled.div`
     display: flex;
     position:sticky;
     top:0;
+    z-index:1;
     
     justify-content: center;
     flex-direction: row;

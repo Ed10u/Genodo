@@ -57,7 +57,7 @@ const HomePageContainer2 = styled.div`
 `;
 
 const SubContent = styled.div`
-    width:60%;
+    width:40%;
     font-size:1.5rem;
     font-weight:normal;
     padding-top:2rem;

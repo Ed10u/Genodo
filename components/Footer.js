@@ -28,14 +28,14 @@ const Icon = styled.img`
 `
 const Container = styled.div`
     display: flex;
-    position:relative;
+    position:absolute;
     justify-content: space-between;
     flex-direction: column;
     align-items:center;
     width: 90vw;
-    height:20vw;
-    background-color: #212529;
-    z-index:30;
+    height:15vw;
+    background-color: white;
+    z-index:10;
     padding-top: 2vw;
     padding-bottom: 2vw;
     padding-right: 5vw;
@@ -56,7 +56,7 @@ const NavigationButtonContainer = styled.div`
     display: flex;
     justify-content: space-between;
     width: 20%;
-    background-color: #212529;
+    background-color: white;
     padding-top:0.75vw;`
 
 const Navigator = styled.a`
@@ -64,7 +64,7 @@ const Navigator = styled.a`
     font-weight: bold;
     padding-top:50px;
     padding-bottom:40px;
-    color: white;
+    color: #79D4FF;
     cursor: pointer;
     transition: 0.3s ease-in-out;
     text-decoration:none;

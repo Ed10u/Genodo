@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { FullLoginMenuProvider } from '../components/customHook/fullLoginMenuProvider';
 
 const GlobalStyle = createGlobalStyle`
 *{
@@ -12,7 +13,9 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Component {...pageProps} />
+      <FullLoginMenuProvider>
+        <Component {...pageProps} />
+      </FullLoginMenuProvider>  
     </>
   );
 }
