@@ -5,7 +5,6 @@ import {useScrollValue} from '@/components/customHook/scrollValue'
 
 const Footer = () => {
     const ValueOfScroll = useScrollValue();
-    console.log(ValueOfScroll);
     
   return (
     <>

@@ -40,7 +40,7 @@ const HomeContent3 =()=>{
             "anemia",
             "caries"
           ];          
-                      
+          
           const fetchDiseaseInfo = async () => {
             const fetchedDiseases = [];
             const attemptedDiseases = new Set();
@@ -95,7 +95,7 @@ const HomeContent3 =()=>{
             <TopHalfContainer opacity={style.opacity} $translateY={style.translateY}>
                 <CardScrollWrapper>
                 {diseases.map((disease, index) => (
-                            <Card key={index}>
+                            <Card key={index} bgColor={cardColors[index % cardColors.length]}>
                                 <Cardheading>
                                     {disease.name}
                                 </Cardheading>
@@ -124,7 +124,7 @@ const HomePageContainer2 = styled.div`
     height: 50vw;
     z-index: 2;
     position:relative;
-    padding-top:10rem;
+    padding-top:15%;
 `;
 
 
@@ -189,15 +189,22 @@ const Cardheading = styled.div`
 const CardContent = styled.div`
   width: 80%;
   height:70%;
-  font-size: 14px;
+  font-size: 20px;
   position: absolute;
   animation: ${slideOut} 1s forwards;
 
 `;
-
+const cardColors = [
+  "#4A90E2",
+  "#FFFFFF",
+  "#68C3A3",
+  "#F0F2F4",
+  "#F5F5DC"
+];
 const Card = styled.button`
-  background-color: #B2DECA;
-  width: 400px;
+  width:30%;
+
+  background-color: ${props => props.bgColor};
   display: flex;
   flex-direction: column;
   border-radius: 2rem;

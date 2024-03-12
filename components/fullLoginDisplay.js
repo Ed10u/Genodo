@@ -101,8 +101,8 @@ const WindowAnimationOut = keyframes`
 const MenuWindow = styled.div`
     display:flex;
     height:100%;
-    background-color:rgb(87,202,195);
-    width:35%;
+    background-color:#b5eaee;
+    width:38%;
     color:white;
     align-items:center;
     justify-content:center;
@@ -117,18 +117,19 @@ const MenuWindow = styled.div`
 
 `
 const LoginWindow = styled(MenuWindow)`
-    width:30%;
+    width:31%;
 
     background-image:url('/LoginBackground.jpg');
     background-size: cover;
     background-position: center;
-    animation-delay: ${({ animationState }) => animationState === 'in' ? '1.5s' : '0s'};
+    animation-delay: ${({ animationState }) => animationState === 'in' ? '1.15s' : '0s'};
 
 
 `
 const RegisterWindow = styled(MenuWindow)`
+    width:31%;
     background-color: #79D4FF;
-    animation-delay: ${({ animationState }) => animationState === 'in' ? '2s' : '0s'};
+    animation-delay: ${({ animationState }) => animationState === 'in' ? '1.3s' : '0s'};
 `
 
 const ButtonContainer = styled.div`
@@ -184,6 +185,47 @@ const PasswordInput = styled(ContentInput)`
 `
 const ErrorText = styled.div`
     color:red;
+`
+const MenuButtonWrapper = styled.div`
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction:column;
+    width:100%;
+    height:60%;
+    gap:10%;
+    font-family: Inconsolata, monospace;
+
+
+`
+const MenuButtons = styled.a`
+    color: black;
+    text-align: center;
+    align-self: stretch;
+    padding-top: 1.5dvh;
+    padding-bottom: 1.5dvh;
+    font-size: 5dvh;
+    font-weight: 500;
+    line-height: 1em;
+    transition: color .2s;
+    text-decoration: none;
+
+    &:hover{
+        opacity:0.3;
+        scale(1.01);
+    }
+`
+const WebsiteName = styled.a`
+    font-size: 2.5vw;
+    font-weight: bold;
+    color: rgb(87,202,195);
+
+    text-decoration:none;
+`
+const WebName = styled.div`
+    font-family: 'poppins-bold', sans-serif !important;
+    display:flex;
+    flex-direction:row;
 `
 
 const FullLoginMenu = () => {
@@ -283,7 +325,23 @@ const FullLoginMenu = () => {
                     <ExitMenuWrapper>
                     <ExitMenu onClick={handleClose}>X</ExitMenu>
                     </ExitMenuWrapper>
-                    Continue as Guest
+                    <MenuButtonWrapper>
+                        <WebName>
+                             <WebsiteName href="/">GenoDo</WebsiteName>
+                        </WebName>
+                        <MenuButtons href = "/">
+                            Home
+                        </MenuButtons>
+                        <MenuButtons href = "/searchPage">
+                            Search
+                        </MenuButtons>
+                        <MenuButtons href = "/searchHistory">
+                            Search History
+                        </MenuButtons>
+                        <MenuButtons href = "/about">
+                            About
+                        </MenuButtons>
+                    </MenuButtonWrapper>
                 </MenuWindow>
             </WindowWrapper>
         </ContentWrapper>

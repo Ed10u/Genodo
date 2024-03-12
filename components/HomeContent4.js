@@ -1,15 +1,15 @@
 import React,{useState,useEffect} from 'react';
 import styled,{keyframes} from 'styled-components';
+import {useScrollValue} from '@/components/customHook/scrollValue'
 
 
 
 
 const HomeContent4 =()=>{
     const [style, setStyle] = useState({ opacity: 0, translateY: '300px' });
-
     useEffect(() => {
       const handleScroll = () => {
-        const shouldBeVisible = window.scrollY > 3000;
+        const shouldBeVisible = window.scrollY > 1500;
         if (shouldBeVisible) {
           setStyle({ opacity: 1, translateY: '0px' });
         } else {
@@ -115,10 +115,12 @@ const HomePageContainer2 = styled.div`
     flex-direction: column;
     gap:5rem;
     align-items: center;
-    height: 100vw;
+    height: 100%;
     z-index: 2;
     position:relative;
-    padding-top:20rem;
+    padding-top:20%;
+
+
 
     opacity: ${props => props.opacity};
     transform: translateY(${props => props.$translateY});
@@ -127,17 +129,20 @@ const HomePageContainer2 = styled.div`
 
 
 const TopHalfContainer = styled.div`
-    width:90.9%;
-    font-size:2.5rem;
-    text-align:center;
-    color:black;
-    display:flex;
-    flex-direction:row;
-    height:70%;
-    padding-bottom:20rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 2.5rem;
+  text-align: center;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  padding: 1rem;
+  paddint-top:10rem;
+  padding-bottom: 10rem;
 
-    
-    position: relative;
+  position: relative;
+  overflow-x: scroll; // Hide horizontal overflow
 `;
 
 const Cardheading = styled.div`
@@ -170,6 +175,9 @@ const Card = styled.button`
   gap: 2rem;
   transform-origin: bottom;
 
+  
+
+  
   &:hover {
     transform: scaleY(1.05);
   }
@@ -210,6 +218,7 @@ display:flex;
 flex-direction:column;
 position:relative;
 gap:2rem;
+
 `
 const RightCards = styled.div`
 `

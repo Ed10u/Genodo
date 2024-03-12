@@ -2,18 +2,23 @@ import React, { useState,useEffect } from 'react'
 import styled from 'styled-components'
 import { db } from '../library/firebaseConfig'; // Adjust the path as necessary
 import { collection, getDocs } from 'firebase/firestore';
+import {auth} from '../library/firebaseConfig';
 
 
 const searchHistory = () => {
     const [searchHistory, setSearchHistory] = useState([]);
     useEffect(() => {
         const fetchSearchHistory = async () => {
+          if(auth.currentUser){
           const querySnapshot = await getDocs(collection(db, "searchHistory"));
           const historyData = querySnapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
+
           }));
           setSearchHistory(historyData);
+        }else{
+        }
         };
     
         fetchSearchHistory();
@@ -24,11 +29,13 @@ const searchHistory = () => {
         <ContentContainer>
            <Content>Search History</Content>
            <SubContent>
-           {searchHistory.filter(item => item.Email && item.History).map((item) => (
+            {searchHistory.length>0?(
+           searchHistory.filter(item => item.Email && item.History).map((item) => (
             <SearchHistoryContainer key={item.id}>
               <HistoryTerm>{item.History}</HistoryTerm>
             </SearchHistoryContainer>
-          ))}
+          ))
+            ):(<p>Please Login to see search history</p>)}
         </SubContent>
     </ContentContainer>
     </HomePageContainer>

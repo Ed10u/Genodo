@@ -11,8 +11,6 @@ import ContentPage4 from "@/components/HomeContent4";
 import Display from '@/components/fullLoginDisplay';
 
 
-
-
 export default function index() {
   const router = useRouter();
   const ValueOfScroll = useScrollValue();

@@ -8,7 +8,7 @@ import { useFullLoginMenu } from '../components/customHook/fullLoginMenuProvider
 
 
 const NavbarSolid = () => {
-    const [loggedUser, setLoggedUser] = useState("LogIn");
+    const [loggedUser, setLoggedUser] = useState("LogInMenu");
     const router = useRouter();
 
     useEffect(() => { 
@@ -16,7 +16,7 @@ const NavbarSolid = () => {
             if (user) {
                 setLoggedUser(user.email);
             } else {
-                setLoggedUser("LogIn");
+                setLoggedUser("LogInMenu");
                 
             }
         });
@@ -33,6 +33,7 @@ const NavbarSolid = () => {
         </WebName>
         <NavigationButtonContainer>
             <Navigator href="/">Home</Navigator>
+            <Navigator href="/searchPage">Search</Navigator>
             <Navigator href = "/about">About</Navigator>
             <LoginContainer>
                 <Login onClick={()=>setIsVisible(true)}>{loggedUser}</Login>
@@ -59,7 +60,7 @@ const Container = styled.div`
     background-color: white;
     position:sticky;
     top:0;
-    z-index:1;
+    z-index:3;
 
     display: flex;
     justify-content: space-between;
@@ -113,7 +114,7 @@ const Login = styled.button`
     background-color: #79D4FF;
     display: flex;
     flex-direction: column;
-    border-radius: 2rem;
+    border-radius: 0.5rem;
     border-style: none;
     flex-shrink: 0;
     transition: transform 0.5s ease;
