@@ -150,28 +150,27 @@ const Navigator = styled.button`
 const Login = styled.button`
     font-size:1.3vw;
     font-weight: bold;
-    color: #79D4FF;
-    background-color:white;
+    color: white;
+    background-color:rgb(87,202,195);
 
     text-decoration:none;
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    border-radius: 0.5rem;
     border-style: none;
     flex-shrink: 0;
     transition: transform 0.5s ease, background-color 0.5s ease-in-out, color 0.5s ease-in-out;
     position: relative;
-    padding:0.2rem 1rem;
+    padding:0.4rem 1rem;
 
     &:hover{
         transform: scale(1.05);
         background-color: #79D4FF;
-      color: white;
 
     }
 `
 const LoginContainer = styled.div`
+    height:100%;
 `;
 
 

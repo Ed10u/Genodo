@@ -101,7 +101,8 @@ const WindowAnimationOut = keyframes`
 const MenuWindow = styled.div`
     display:flex;
     height:100%;
-    background-color:#b5eaee;
+    background: linear-gradient(to left, #F1F1F2, color2);
+    background-color:  #E7E8D1;
     width:38%;
     color:white;
     align-items:center;
@@ -118,7 +119,7 @@ const MenuWindow = styled.div`
 
 `
 const LoginWindow = styled(MenuWindow)`
-    width:31%;
+    width:29%;
     height:100%;
     background-image:url('/LoginBackground.jpg');
     background-size: cover;
@@ -137,40 +138,30 @@ const LoginWindow = styled(MenuWindow)`
       }
 
 `
-const RegisterTextLoggedIn = styled.div`
-    font-family: 'DM Sans', Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 2rem;
-    line-height: 2.8rem;
-    height:10%;
-    width:60%;
-    text-align:center;
-    color:#202020;
-    font-family: Georgia, serif;
 
-
-`;
 
 const RegisterWindow = styled(MenuWindow)`
-    width:31%;
-    background-color: #808080;
+    width:33%;
+    background-color: #A7BEAE;
     animation-delay: ${({ $animationState }) => $animationState === 'in' ? '1.3s' : '0s'};
     z-index:2;
 `
 
 const ButtonContainer = styled.div`
-    width:40%;
-    height:25%;
+    width:50%;
+    height:20em;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    gap:2rem;
+    gap:1.2rem;
     z-index:2;
 
     
-`//the button
+`
+const ButtonContainerRegister = styled(ButtonContainer)`
+`
+//the button
 const ContentButtonRegister = styled.button`
     width:40%;
     height:30%  ;
@@ -194,6 +185,14 @@ const ContentButtonLogin = styled(ContentButtonRegister)`
     background-color:#79D4FF;
     height:30%;
 
+
+`
+const RegisterButton = styled.a`
+    transition:0.2s linear;
+    font-size:1em;
+    &:hover{
+        transform:scale(1.1);
+    }
 `
 const LogoutButton = styled(ContentButtonLogin)`
     height:20%;
@@ -211,7 +210,7 @@ const UserLoggedIn = styled.div`
 `
 const ContentInput = styled.input`
     width:100%;
-    height:25%;
+    height:35%;
     background-color:#d9ebf4;
     border:none;
     border-radius:6px;/* make the boarder round*/
@@ -226,7 +225,7 @@ const ContentInput = styled.input`
 
 `
 const PasswordInput = styled(ContentInput)`
-    height:25%;
+    height:35%;
 `
 const ErrorText = styled.div`
     color:red;
@@ -239,7 +238,7 @@ const MenuButtonWrapper = styled.div`
     flex-direction:column;
     width:100%;
     height:60%;
-    gap:10%;
+    gap:3%;
 
 `
 const MenuButtons = styled.a`
@@ -286,7 +285,8 @@ const FullLoginMenu = () => {
     const [animationState, setAnimationState] = useState('idle');
     const [RegisterErrorMessage, setRegisterErrorMessage] = useState('');
     const [LoginErrorMessage, setLoginErrorMessage] = useState('');
-
+    const [RegisterIsVisible,setRegisterIsVisible] = useState(false);
+ 
 
     console.log(isVisible);
 
@@ -309,6 +309,9 @@ const FullLoginMenu = () => {
     const handleClose = () => {
         setAnimationState('out');
     };
+    const handleRegister = () =>{
+        setRegisterIsVisible(!RegisterIsVisible);
+    }
 
     useEffect(() => {
         let animationTimeout;
@@ -353,25 +356,16 @@ const FullLoginMenu = () => {
                 {
                     user?(
                         <RegisterWindow $animationState={animationState}>
-                            <RegisterTextLoggedIn>
-                            Central Search Bar
-                            </RegisterTextLoggedIn>
-                            <RegisterTextLoggedIn>
-                            Featured Diseases
-                            </RegisterTextLoggedIn>
-                            <RegisterTextLoggedIn>
-                            User Stories and Support
-                            </RegisterTextLoggedIn>
-                            <RegisterTextLoggedIn>
-                            Interactive Content
-                            </RegisterTextLoggedIn>
-                            <RegisterTextLoggedIn>
-                            Comprehensive Health Database
-                            </RegisterTextLoggedIn>
+                        <UserLoggedIn>{user.email}</UserLoggedIn>
+                            <ButtonContainer>
+                                <LogoutButton onClick={handleLogout}>
+                                    Logout
+                                </LogoutButton>
+                            </ButtonContainer>
                         </RegisterWindow>
                     ):(
                     <RegisterWindow $animationState={animationState}>
-                    <ButtonContainer>
+                    <ButtonContainerRegister style={{ display: RegisterIsVisible ? 'flex' : 'none' }} $animationState={animationState}>
                         <h1 style={{fontSize:"35px",fontWeight:"bold"}}>Register</h1>
                         <ContentInput placeholder="Enter your User/Email" onChange={(event)=>{setRegisterEmail(event.target.value)}}/>
                         <PasswordInput type="password" placeholder="Enter your Password" onChange={(event)=>{setRegisterPassword(event.target.value)}}/>
@@ -379,23 +373,9 @@ const FullLoginMenu = () => {
                             Register
                         </ContentButtonRegister>
                         <ErrorText>{RegisterErrorMessage}</ErrorText>
-                    </ButtonContainer>
-                </RegisterWindow>
-                )
-                }
-                {
-                    user?(
-                        <LoginWindow $animationState={animationState}>
-                           <UserLoggedIn>{user.email}</UserLoggedIn>
-                            <ButtonContainer>
-                                <LogoutButton $animationState={animationState} onClick={handleLogout}>
-                                    Logout
-                                </LogoutButton>
-                            </ButtonContainer>
-                        </LoginWindow>
-                    ):(
-                        <LoginWindow $animationState={animationState}>
-                            <ButtonContainer>
+                        <RegisterButton onClick={handleRegister}>Back to Login</RegisterButton>
+                    </ButtonContainerRegister>
+                    <ButtonContainer style={{ display: RegisterIsVisible ? 'none' : 'flex' }} $animationState={animationState}>
                                 <h1 style={{fontSize:"35px",fontWeight:"bold"}}>Login</h1>
                                     <ContentInput placeholder="Enter your User/Email" onChange={(event) => setLoginEmail(event.target.value)}/>
                                     <PasswordInput type="password" placeholder="Enter your Password" onChange={(event) => setLoginPassword(event.target.value)}/>
@@ -403,10 +383,13 @@ const FullLoginMenu = () => {
                                         Login
                                     </ContentButtonLogin>
                                 <ErrorText>{LoginErrorMessage}</ErrorText>
-                            </ButtonContainer>
-                        </LoginWindow>
-                    )
+                                <RegisterButton onClick={handleRegister}>Register</RegisterButton>
+                    </ButtonContainer>
+                </RegisterWindow>
+                )
                 }
+                        <LoginWindow $animationState={animationState}>
+                        </LoginWindow>
                 <MenuWindow $animationState={animationState}>
                     <ExitMenuWrapper>
                     <ExitMenu onClick={handleClose}>X</ExitMenu>
