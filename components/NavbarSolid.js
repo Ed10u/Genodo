@@ -22,7 +22,16 @@ const NavbarSolid = () => {
         });
     },[]); 
 
-    const { isVisible, setIsVisible } = useFullLoginMenu();
+    const { setIsVisible } = useFullLoginMenu();
+    const handleHomeButton = async()=>{
+        router.push("/");
+    }
+    const handleAboutButton = async()=>{
+        router.push("/about");
+    }
+    const handleSearchPageButton = async()=>{
+        router.push("/searchPage");
+    }
 
   return (
     <>
@@ -32,12 +41,12 @@ const NavbarSolid = () => {
             <WebsiteName href="/">GenoDo</WebsiteName>
         </WebName>
         <NavigationButtonContainer>
-            <Navigator href="/">Home</Navigator>
-            <Navigator href="/searchPage">Search</Navigator>
-            <Navigator href = "/about">About</Navigator>
+            <Navigator onClick={handleHomeButton}>Home</Navigator>
+            <Navigator onClick={handleSearchPageButton}>Search</Navigator>
+            <Navigator onClick={handleAboutButton}>About</Navigator>
             <LoginContainer>
                 <Login onClick={()=>setIsVisible(true)}>{loggedUser}</Login>
-              </LoginContainer>   
+            </LoginContainer>   
         </NavigationButtonContainer>
     </Container>
     </>
@@ -84,45 +93,64 @@ const WebsiteName = styled.a`
 `
 
 const NavigationButtonContainer = styled.div`
-    width:30%;
+    width:40%;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     background-color: white;
     padding-top:0.75vw;
+    translate: 0 cal(-1%*(max(var(--scroll),25)-25)*100/75);
 
 
     `;
 
-const Navigator = styled.a`
+const Navigator = styled.button`
     font-size:1.3vw;
     font-weight: bold;
     color: #79D4FF;
     text-decoration:none;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
+    background-color:white;
 
-    &:hover{
-        transform: scale(1.1);
-    }`;
-const Login = styled.button`
-    font-size:1.3vw;
-    font-weight: bold;
-    color: white;
-    text-decoration:none;
     cursor: pointer;
-    background-color: #79D4FF;
+    text-decoration:none;
     display: flex;
     flex-direction: column;
     border-radius: 0.5rem;
     border-style: none;
     flex-shrink: 0;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+    padding:0.2rem 1rem;
+
+
+    &:hover{
+        transform: scale(1.05);
+        background-color: #79D4FF;
+      color: white;
+
+    }
+`;
+const Login = styled.button`
+    font-size:1.3vw;
+    font-weight: bold;
+    color: #79D4FF;
+    background-color:white;
+
+    text-decoration:none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    border-style: none;
+    flex-shrink: 0;
+    transition: transform 0.5s ease, background-color 0.5s ease-in-out, color 0.5s ease-in-out;
     position: relative;
     padding:0.2rem 1rem;
 
     &:hover{
-        transform: scale(1.1);
+        transform: scale(1.05);
+        background-color: #79D4FF;
+      color: white;
+
     }
 `
 const LoginContainer = styled.div`

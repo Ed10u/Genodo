@@ -1,11 +1,11 @@
 import React, { useState,useEffect } from 'react'
 import styled from 'styled-components'
-import { db } from '../library/firebaseConfig'; // Adjust the path as necessary
+import { db,auth } from '../library/firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
-import {auth} from '../library/firebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
 
 
-const searchHistory = () => {
+const SearchHistory = () => {
     const [searchHistory, setSearchHistory] = useState([]);
     useEffect(() => {
         const fetchSearchHistory = async () => {
@@ -17,12 +17,19 @@ const searchHistory = () => {
 
           }));
           setSearchHistory(historyData);
-        }else{
         }
         };
     
-        fetchSearchHistory();
-      }, []);
+      const userStateChange = onAuthStateChanged(auth, (user) => {
+        if (user) {
+            fetchSearchHistory();
+        } else {
+            setSearchHistory([]);
+        }
+            });
+
+            return () => userStateChange();
+        }, []);
   return (
     <>
     <HomePageContainer>
@@ -101,4 +108,4 @@ const HistoryTerm = styled.a`
     color: white;
     font-weight:bold;
 `;
-export default searchHistory;
+export default SearchHistory;

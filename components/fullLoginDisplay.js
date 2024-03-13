@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import styled,{keyframes} from 'styled-components'
-import { signInWithEmailAndPassword,onAuthStateChanged,createUserWithEmailAndPassword} from 'firebase/auth'
+import { signInWithEmailAndPassword,onAuthStateChanged,createUserWithEmailAndPassword,signOut} from 'firebase/auth'
 import {auth} from '../library/firebaseConfig';
 import { useRouter } from 'next/router'
 import { useFullLoginMenu } from '../components/customHook/fullLoginMenuProvider';
@@ -41,8 +41,8 @@ const ContentWrapper =styled.div`
     right: 0;
     z-index:10000;
 
-    animation: ${({ animationState }) => animationState === 'in' ? SlideUp : SlideOut} 1s ease-in forwards;
-    animation-delay: ${({ animationState }) => animationState === 'in' ? '0s' : '0.3s'};
+    animation: ${({ $animationState }) => $animationState === 'in' ? SlideUp : SlideOut} 1s ease-in forwards;
+    animation-delay: ${({ $animationState }) => $animationState === 'in' ? '0s' : '0.3s'};
 
 
 
@@ -107,48 +107,77 @@ const MenuWindow = styled.div`
     align-items:center;
     justify-content:center;
 
+    z-index:1;
     opacity:0;
 
     flex-direction:column;
-    animation: ${({ animationState }) => animationState === 'in' ? WindowAnimationIn : WindowAnimationOut} 1s ease-in-out forwards;
-    animation-delay: ${({ animationState }) => animationState === 'in' ? '1s' : '0s'};
+    animation: ${({ $animationState }) => $animationState === 'in' ? WindowAnimationIn : WindowAnimationOut} 1s ease-in-out forwards;
+    animation-delay: ${({ $animationState }) => $animationState === 'in' ? '1s' : '0s'};
 
-    
+
 
 `
 const LoginWindow = styled(MenuWindow)`
     width:31%;
-
+    height:100%;
     background-image:url('/LoginBackground.jpg');
     background-size: cover;
     background-position: center;
-    animation-delay: ${({ animationState }) => animationState === 'in' ? '1.15s' : '0s'};
-
+    animation-delay: ${({ $animationState }) => $animationState === 'in' ? '1.15s' : '0s'};
+    &::before{
+        content: "";
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index:2;
+        
+      }
 
 `
+const RegisterTextLoggedIn = styled.div`
+    font-family: 'DM Sans', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 2.8rem;
+    height:10%;
+    width:60%;
+    text-align:center;
+    color:#202020;
+    font-family: Georgia, serif;
+
+
+`;
+
 const RegisterWindow = styled(MenuWindow)`
     width:31%;
-    background-color: #79D4FF;
-    animation-delay: ${({ animationState }) => animationState === 'in' ? '1.3s' : '0s'};
+    background-color: #808080;
+    animation-delay: ${({ $animationState }) => $animationState === 'in' ? '1.3s' : '0s'};
+    z-index:2;
 `
 
 const ButtonContainer = styled.div`
     width:40%;
-    height:100%;
+    height:25%;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     gap:2rem;
+    z-index:2;
 
     
 `//the button
 const ContentButtonRegister = styled.button`
     width:40%;
-    height:5%  ;
+    height:30%  ;
     border:none;
     color:white;
     font-size:18px;
+    z-index:2;
 
     background-color:rgb(87,202,195);
     border-radius:6px;
@@ -163,11 +192,26 @@ const ContentButtonRegister = styled.button`
 `//the input
 const ContentButtonLogin = styled(ContentButtonRegister)`
     background-color:#79D4FF;
+    height:30%;
 
+`
+const LogoutButton = styled(ContentButtonLogin)`
+    height:20%;
+    
+`
+const UserLoggedIn = styled.div`
+    color: white;
+    text-align: center;
+    align-self: stretch;
+    font-size: 3dvh;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: Georgia, serif;
+    z-index:2;
 `
 const ContentInput = styled.input`
     width:100%;
-    height:50px;
+    height:25%;
     background-color:#d9ebf4;
     border:none;
     border-radius:6px;/* make the boarder round*/
@@ -182,11 +226,13 @@ const ContentInput = styled.input`
 
 `
 const PasswordInput = styled(ContentInput)`
+    height:25%;
 `
 const ErrorText = styled.div`
     color:red;
 `
 const MenuButtonWrapper = styled.div`
+
     display:flex;
     justify-content:center;
     align-items: center;
@@ -194,8 +240,6 @@ const MenuButtonWrapper = styled.div`
     width:100%;
     height:60%;
     gap:10%;
-    font-family: Inconsolata, monospace;
-
 
 `
 const MenuButtons = styled.a`
@@ -204,15 +248,17 @@ const MenuButtons = styled.a`
     align-self: stretch;
     padding-top: 1.5dvh;
     padding-bottom: 1.5dvh;
-    font-size: 5dvh;
+    font-size: 4dvh;
     font-weight: 500;
     line-height: 1em;
     transition: color .2s;
     text-decoration: none;
+    font-family: Georgia, serif;
+    color:#3f6366;
 
     &:hover{
         opacity:0.3;
-        scale(1.01);
+        transform: scale(1.01);
     }
 `
 const WebsiteName = styled.a`
@@ -233,6 +279,7 @@ const FullLoginMenu = () => {
     const [loginPassword, setLoginPassword] = useState('');
     const [registerEmail,setRegisterEmail] = useState("");
     const [registerPassword,setRegisterPassword] = useState("");
+    const [user, setUser] = useState("");
 
     const router = useRouter();
     const { isVisible, setIsVisible } = useFullLoginMenu();
@@ -245,13 +292,19 @@ const FullLoginMenu = () => {
 
 
     useEffect(() => { 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-            } else {
-            }
+        onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
         });
-    },[]); 
+    },[]);
 
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            console.log("Logged out successfully");
+        } catch (error) {
+            console.error("Logout Error:", error);
+        }
+    };
 
     const handleClose = () => {
         setAnimationState('out');
@@ -275,7 +328,6 @@ const FullLoginMenu = () => {
     const LoginButton= async ()=>{
         try{
         const user = await signInWithEmailAndPassword(auth,loginEmail,loginPassword);
-        router.push('/searchPage');
         setAnimationState('out');
 
         console.log(user);
@@ -288,7 +340,6 @@ const FullLoginMenu = () => {
         try{
         const user = await createUserWithEmailAndPassword(auth,registerEmail,registerPassword);
         console.log(user);
-        router.push('/searchPage');
         } catch(error){
             console.log(error.message);
             setRegisterErrorMessage("Invalid Email");
@@ -297,9 +348,29 @@ const FullLoginMenu = () => {
     }
     return(
         <>
-        <ContentWrapper className="fullscreen-menu" style={{ display: isVisible ? 'flex' : 'none' }} animationState={animationState}>
+        <ContentWrapper className="fullscreen-menu" style={{ display: isVisible ? 'flex' : 'none' }} $animationState={animationState}>
             <WindowWrapper>
-                <RegisterWindow animationState={animationState}>
+                {
+                    user?(
+                        <RegisterWindow $animationState={animationState}>
+                            <RegisterTextLoggedIn>
+                            Central Search Bar
+                            </RegisterTextLoggedIn>
+                            <RegisterTextLoggedIn>
+                            Featured Diseases
+                            </RegisterTextLoggedIn>
+                            <RegisterTextLoggedIn>
+                            User Stories and Support
+                            </RegisterTextLoggedIn>
+                            <RegisterTextLoggedIn>
+                            Interactive Content
+                            </RegisterTextLoggedIn>
+                            <RegisterTextLoggedIn>
+                            Comprehensive Health Database
+                            </RegisterTextLoggedIn>
+                        </RegisterWindow>
+                    ):(
+                    <RegisterWindow $animationState={animationState}>
                     <ButtonContainer>
                         <h1 style={{fontSize:"35px",fontWeight:"bold"}}>Register</h1>
                         <ContentInput placeholder="Enter your User/Email" onChange={(event)=>{setRegisterEmail(event.target.value)}}/>
@@ -310,18 +381,33 @@ const FullLoginMenu = () => {
                         <ErrorText>{RegisterErrorMessage}</ErrorText>
                     </ButtonContainer>
                 </RegisterWindow>
-                <LoginWindow animationState={animationState}>
-                <ButtonContainer>
-                    <h1 style={{fontSize:"35px",fontWeight:"bold"}}>Login</h1>
-                        <ContentInput placeholder="Enter your User/Email" onChange={(event) => setLoginEmail(event.target.value)}/>
-                        <PasswordInput type="password" placeholder="Enter your Password" onChange={(event) => setLoginPassword(event.target.value)}/>
-                        <ContentButtonLogin onClick={LoginButton}>
-                            Login
-                    </ContentButtonLogin>
-                    <ErrorText>{LoginErrorMessage}</ErrorText>
-                </ButtonContainer>
-                </LoginWindow>
-                <MenuWindow animationState={animationState}>
+                )
+                }
+                {
+                    user?(
+                        <LoginWindow $animationState={animationState}>
+                           <UserLoggedIn>{user.email}</UserLoggedIn>
+                            <ButtonContainer>
+                                <LogoutButton $animationState={animationState} onClick={handleLogout}>
+                                    Logout
+                                </LogoutButton>
+                            </ButtonContainer>
+                        </LoginWindow>
+                    ):(
+                        <LoginWindow $animationState={animationState}>
+                            <ButtonContainer>
+                                <h1 style={{fontSize:"35px",fontWeight:"bold"}}>Login</h1>
+                                    <ContentInput placeholder="Enter your User/Email" onChange={(event) => setLoginEmail(event.target.value)}/>
+                                    <PasswordInput type="password" placeholder="Enter your Password" onChange={(event) => setLoginPassword(event.target.value)}/>
+                                    <ContentButtonLogin onClick={LoginButton}>
+                                        Login
+                                    </ContentButtonLogin>
+                                <ErrorText>{LoginErrorMessage}</ErrorText>
+                            </ButtonContainer>
+                        </LoginWindow>
+                    )
+                }
+                <MenuWindow $animationState={animationState}>
                     <ExitMenuWrapper>
                     <ExitMenu onClick={handleClose}>X</ExitMenu>
                     </ExitMenuWrapper>

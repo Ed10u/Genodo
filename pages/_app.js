@@ -3,7 +3,6 @@ import { FullLoginMenuProvider } from '../components/customHook/fullLoginMenuPro
 
 const GlobalStyle = createGlobalStyle`
 *{
-  font-family: 'poppins-bold', sans-serif !important;
   padding: 0;
   margin: 0;
   -webkit-user-select: none;

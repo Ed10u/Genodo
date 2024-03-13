@@ -89,9 +89,6 @@ const SearchPage = () => {
   return (
     <>
       <HomePageContainer>
-        <Title>
-          Search
-        </Title>
         <ButtonContainer>
           <ContentInput
             placeholder="Enter disease name"
@@ -146,38 +143,25 @@ const SlideContent = keyframes`
     }
 `
 
-const Title = styled.div`
-    font-size: 100px;
-    font-weight:bold;    
-    padding-bottom:1vw;
-    opacity:0;
-    color: White;
 
-    padding-top:15%;
-    z-index:2;
-
-
-    animation: ${SlideContent} 1s ease-in-out;
-    animation-duration:1s;
-    animation-delay:1.7s;
-    animation-fill-mode:forwards;
-
-`;
 
 const ResultsContainer = styled.div`
   display: flex;
   flex-direction: column;
   position:relative;
-  width:40%;
+  width:60em;
   height:10em;
-  aligh-items:left;
+  align-items:left;
+  
   `; 
 
 const ResultItem = styled.div`
-  width:63%;
+  width:44em;
+  text-align:left;
   background-color: #d9ebf4;
   padding: 10px;
   z-index:2;
+
 `;
 const SlideImg = keyframes`
 from{
@@ -191,7 +175,8 @@ to{
 `;
 
 const HomePageContainer = styled.div`
-  background-image: url('/searchPageBg.jpg');
+  background-color:#f4fbfb;
+
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -206,21 +191,10 @@ const HomePageContainer = styled.div`
   animation: ${SlideImg} 1.5s ease-out;
   animation-delay: 0.8s; 
 
-  &::before{
-    content: "";
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index:1;
-    
-  }
 `;
 
 const ButtonContainer = styled.div`
-  width: 40%;
+  width: 60em;
   height:100%;
   display: flex;
   justify-content: center;
@@ -237,7 +211,7 @@ const ButtonContainer = styled.div`
 `;
 
 const ContentButton = styled.button`
-  width: 50%;
+  width: 30%;
   height: 3vw;
   border: none;
   color: white;
@@ -254,14 +228,11 @@ const ContentButton = styled.button`
 `;
 
 const ContentInput = styled.input`
-  width: 100%;
-  height: 3vw;
-  background-color: #d9ebf4;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  padding-left: 15px;
-
+    border-bottom: 1px solid #fff !important;
+    padding: 5px 20px 10px 54px !important;
+    font-family: Cormorant Garamond, serif;
+    font-size: 15px !important;
+    line-height: 1.5;
   &:focus {
     outline: none;
   }
@@ -269,9 +240,10 @@ const ContentInput = styled.input`
 
 const SearchedResultsContainer = styled.div`
   display:flex;
-  jusfity-content:center;
+  jusfity-content:flex-start;
+  flex-wrap:wrap;
   flex-direction: row;
-  width:80%;
+  width:50%;
   height:90%;
   gap:5%
 
@@ -289,7 +261,7 @@ to{
 
 const Card = styled.div`
   width: 20%;
-  height:50vh;
+  height:20em;
   perspective: 1000px;
   
   z-index:2;
@@ -304,10 +276,11 @@ const Card = styled.div`
 
 const CardInner = styled.div`
   width: 100%;
-  height: 50vh;
+  height: 5em;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.999s;
+  opacity:0.8;
 
   ${Card}:hover & {
     transform: rotateY(180deg);
