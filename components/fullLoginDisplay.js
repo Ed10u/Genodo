@@ -31,22 +31,19 @@ const SlideOut = keyframes`
 
 
 const ContentWrapper =styled.div`
-    display: flex;
     jusfity-content:center;
-    background-color:white;
     width: 100%;
     height: 100%;
     position: fixed;
+    background-color:white;
     top: 0;
     right: 0;
     z-index:10000;
 
     animation: ${({ $animationState }) => $animationState === 'in' ? SlideUp : SlideOut} 1s ease-in forwards;
     animation-delay: ${({ $animationState }) => $animationState === 'in' ? '0s' : '0.3s'};
-
-
-
 `
+
 const WindowWrapper = styled.div`
     display:flex;
     flex-direction:row;
@@ -55,8 +52,6 @@ const WindowWrapper = styled.div`
     width:100%;
     align-items:center;
     z-index:10000;
-    background-color:white;
-
 `
 const ExitMenu = styled.button`
     width: 5dvh;
@@ -69,7 +64,6 @@ const ExitMenu = styled.button`
     justify-content: center;
     align-items: center;
     line-height: 1.1em;
-    transition: background-color .2s;
     display: flex;
     position: absolute;
     top: 1.5em;
@@ -101,7 +95,6 @@ const WindowAnimationOut = keyframes`
 const MenuWindow = styled.div`
     display:flex;
     height:100%;
-    background: linear-gradient(to left, #F1F1F2, color2);
     background-color:  #E7E8D1;
     width:38%;
     color:white;
@@ -190,6 +183,7 @@ const ContentButtonLogin = styled(ContentButtonRegister)`
 const RegisterButton = styled.a`
     transition:0.2s linear;
     font-size:1em;
+    color:#3f6366;
     &:hover{
         transform:scale(1.1);
     }
@@ -242,7 +236,6 @@ const MenuButtonWrapper = styled.div`
 
 `
 const MenuButtons = styled.a`
-    color: black;
     text-align: center;
     align-self: stretch;
     padding-top: 1.5dvh;
@@ -260,8 +253,11 @@ const MenuButtons = styled.a`
         transform: scale(1.01);
     }
 `
+const MenuButtonsBottom = styled(MenuButtons)`
+    font-size:1.3em;
+`
 const WebsiteName = styled.a`
-    font-size: 2.5vw;
+    font-size: 3vw;
     font-weight: bold;
     color: rgb(87,202,195);
 
@@ -271,9 +267,31 @@ const WebName = styled.div`
     font-family: 'poppins-bold', sans-serif !important;
     display:flex;
     flex-direction:row;
+    padding-bottom:5em;
+`
+const ButtomInfoWrapper = styled.div`
+    display:flex;
+    flex-direction:row;
+    gap:6em;
+    padding-top:10em;
+    position:relative;
+    width:100%;
+    justify-content:center;
+
+    &::before{
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height:100%; 
+        background: rgb(0,0,0.3);
+        opacity:0.12;
+        z-index:-1;
+    }
 `
 
-const FullLoginMenu = () => {
+const FullLoginMenu = ({isVisible, setIsVisible, animationState, setAnimationState}) => {
+
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
     const [registerEmail,setRegisterEmail] = useState("");
@@ -281,15 +299,10 @@ const FullLoginMenu = () => {
     const [user, setUser] = useState("");
 
     const router = useRouter();
-    const { isVisible, setIsVisible } = useFullLoginMenu();
-    const [animationState, setAnimationState] = useState('idle');
     const [RegisterErrorMessage, setRegisterErrorMessage] = useState('');
     const [LoginErrorMessage, setLoginErrorMessage] = useState('');
     const [RegisterIsVisible,setRegisterIsVisible] = useState(false);
  
-
-    console.log(isVisible);
-
 
     useEffect(() => { 
         onAuthStateChanged(auth, (currentUser) => {
@@ -315,17 +328,17 @@ const FullLoginMenu = () => {
 
     useEffect(() => {
         let animationTimeout;
-        if (isVisible && animationState !== 'out') {
-            setAnimationState('in');
-        } else if (animationState == 'out') {
-            animationTimeout = setTimeout(() => {
-                setIsVisible(false);
-                setAnimationState('idle');
-            }, 2000); // Match animation duration
+        if(isVisible){
+            if (animationState !== 'out') {
+            } else if (animationState == 'out') {
+                animationTimeout = setTimeout(() => {
+                    setIsVisible(false);
+                    setAnimationState('idle');
+                }, 1600); // Match animation duration
+            }
+            return () => clearTimeout(animationTimeout);
         }
-        console.log(isVisible,animationState);
-        return () => clearTimeout(animationTimeout);
-    }, [isVisible,animationState]);
+    }, [animationState]);
 
 
     const LoginButton= async ()=>{
@@ -407,10 +420,17 @@ const FullLoginMenu = () => {
                         <MenuButtons href = "/searchHistory">
                             Search History
                         </MenuButtons>
-                        <MenuButtons href = "/about">
-                            About
-                        </MenuButtons>
                     </MenuButtonWrapper>
+                    <ButtomInfoWrapper>
+                        <MenuButtonsBottom href = "/searchPage">
+                            Contact
+                        </MenuButtonsBottom>
+                        <MenuButtonsBottom href = "/about">
+                            About
+                        </MenuButtonsBottom>
+                        
+
+                    </ButtomInfoWrapper>
                 </MenuWindow>
             </WindowWrapper>
         </ContentWrapper>

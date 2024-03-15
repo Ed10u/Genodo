@@ -5,10 +5,15 @@ import {auth} from '../library/firebaseConfig';
 import { useRouter } from 'next/router'
 import {useScrollValue} from '@/components/customHook/scrollValue'
 import { useFullLoginMenu } from '../components/customHook/fullLoginMenuProvider';
+import FullLoginMenu from './fullLoginDisplay';
 
 
 
 const Navbar = () => {
+
+    const [animationState, setAnimationState] = useState('idle');
+    const [isVisible, setIsVisible] = useState(false);
+
     const [loggedUser, setLoggedUser] = useState("LogInMenu");
     const router = useRouter();
     const ValueOfScroll = useScrollValue();
@@ -24,7 +29,6 @@ const Navbar = () => {
         });
     },[]); 
 
-    const {setIsVisible } = useFullLoginMenu();
     const handleHomeButton = async()=>{
         router.push("/");
     }
@@ -34,6 +38,7 @@ const Navbar = () => {
     const handleSearchPageButton = async()=>{
         router.push("/searchPage");
     }
+
   return (
     <>
     <Container $ValueOfScroll = {ValueOfScroll}>
@@ -46,10 +51,12 @@ const Navbar = () => {
             <Navigator onClick={handleSearchPageButton}>Search</Navigator>
             <Navigator onClick={handleAboutButton}>About</Navigator>
             <LoginContainer>
-                <Login onClick={()=>setIsVisible(true)}>{loggedUser}</Login>
-            </LoginContainer>   
+                <Login onClick={()=>{setIsVisible(true);setAnimationState('in');}}>{loggedUser}</Login>
+            </LoginContainer> 
         </NavigationButtonContainer>
     </Container>
+    { isVisible && <FullLoginMenu isVisible={isVisible} setIsVisible={setIsVisible}
+                    animationState={animationState} setAnimationState={setAnimationState} />}
     </>
   )
 }
@@ -96,7 +103,7 @@ const Container = styled.div`
     animation-delay:1.8s;
     animation-duration: 2s;
 
-    translate: 0 ${props => Math.max(-1*(Math.max(props.$ValueOfScroll,20)-20)*100/20,-100)}%;
+    translate: 0 ${props => Math.max(-1*(Math.max(props.$ValueOfScroll,50)-50)*100/20,-100)}%;
 `;
 //(oldValue-oldMin)*newRange/oldRange+newMin
 

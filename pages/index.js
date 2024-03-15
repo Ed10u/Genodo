@@ -34,7 +34,7 @@ export default function index() {
            <TextContainer2 $ValueOfScroll={ValueOfScroll}>
            <Content2>Mapping diseases in a glance.</Content2>
            </TextContainer2>
-           <ButtonContainer>
+           <ButtonContainer $ValueOfScroll={ValueOfScroll}>
             <ContentInput placeholder="Enter the disease name"/>
             <ContentButton onClick={Register}>
                 Search
@@ -49,7 +49,7 @@ export default function index() {
         
     </>
   )
-}
+  }
 
 const VideoBackground = styled.video.attrs(props => ({
     style: {
@@ -110,6 +110,9 @@ const SlideContent = keyframes`
     }
 `
 const TextContainer = styled.div`
+        width:100%;
+        align-items:center;
+        text-align:center;
         opacity: ${props => {
         const startFadeAt = 0;
         const endFadeAt = 10;
@@ -128,7 +131,7 @@ const TextContainer2 = styled.div`
     }};
 `
 const Content = styled.div`
-    font-size: 60px;
+    font-size: 5em;
     font-weight:bold;    
     padding-bottom:1vw;
     opacity:0;
@@ -153,8 +156,8 @@ const ContentContainer = styled.div`
 
     flex-direction: column;
     opacity: ${props => {
-        const startFadeAt = 30;
-        const endFadeAt = 50;
+        const startFadeAt = 40;
+        const endFadeAt = 80;
         const scroll = Math.min(Math.max(props.$ValueOfScroll, startFadeAt), endFadeAt);
         return 1 - ((scroll - startFadeAt) / (endFadeAt - startFadeAt));
     }};
@@ -169,14 +172,15 @@ const ButtonContainer = styled.div`
     display:flex;
     flex-direction:row;
     opacity:0;
-    
+
     animation: ${SlideContent} 1s ease-in-out;
     animation-delay:1.7s;
     animation-duration:1.7s;
     animation-fill-mode:forwards;
 
+`
 
-`//the button
+//the button
 const ContentButton = styled.button`
     width:30%;
     margin-left:8px;

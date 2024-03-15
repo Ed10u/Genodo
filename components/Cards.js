@@ -93,13 +93,15 @@ const HomeContent3 =()=>{
         <>
         <HomePageContainer2>
             <TopHalfContainer opacity={style.opacity} $translateY={style.translateY}>
+                <Title>Explore a World of Health: From Common Ailments to Rare Conditions</Title>
+                <SubComtent>"Dive into our comprehensive digital health repository, where curiosity meets clarity. Our platform is meticulously curated to guide you through a vast expanse of medical knowledge, spanning the everyday common cold to the most obscure genetic conditions. Each entry is a testament to our commitment to providing accessible, understandable, and reliable health information." Our Health Data is Sourced from the World Health Organization</SubComtent>
                 <CardScrollWrapper>
                 {diseases.map((disease, index) => (
-                            <Card key={index} bgColor={cardColors[index % cardColors.length]}>
+                            <Card key={index} $bgColor={cardColors[index % cardColors.length]}>
                                 <Cardheading>
                                     {disease.name}
                                 </Cardheading>
-                                <CardContent>
+                                <CardContent >
                                     {disease.definition}
                                 </CardContent>
                             </Card>
@@ -116,28 +118,28 @@ const HomePageContainer2 = styled.div`
     font-family: 'poppins-bold', sans-serif !important;
     font-weight: bold;
     display: flex;
-    justify-content: center;
     flex-direction: column;
     gap:20%;
     align-items: center;
+    background-color: #E7E8D1;
+    box-sizing: border-box;
+    border-radius: 2rem;
     
-    height: 50vw;
+    height: 70vw;
     z-index: 2;
     position:relative;
-    padding-top:15%;
 `;
 
 
 const TopHalfContainer = styled.div`
     width:100%;
+    height: 90%;
     font-size:2.5vw;
     text-align:center;
     color:black;
     display:flex;
     flex-direction:column;
     justify-content:center;
-
-    
     position: relative;
     gap: 2rem;
 
@@ -145,12 +147,25 @@ const TopHalfContainer = styled.div`
     transform: translateY(${props => props.$translateY});
     transition: all 1s linear;
 `;
+
+const Title = styled.div`
+  padding-bottom:20rem;
+  width: 50%;
+  text-align: left;
+  padding: 5rem 5rem 0rem 5rem;
+
+
+`
+const SubComtent = styled(Title)`
+  font-size: 1.5rem;
+  font-weight: normal;
+  `
 const CardScrollWrapper = styled.div`
     display: flex;
     position: relative;
-    padding: 2rem 2rem 2rem 2rem;
+    padding: 5rem 2rem 2rem 2rem;
     gap: 2rem;
-    height:500px;
+    height: 100%;
 
     overflow-x: scroll;
     overflow-y: hidden;
@@ -188,9 +203,13 @@ const Cardheading = styled.div`
 
 const CardContent = styled.div`
   width: 80%;
-  height:70%;
+  height:60%;
   font-size: 20px;
   position: absolute;
+  border-style: none;
+  boder-radius: 2rem;
+  padding: 0rem 2rem;
+
   animation: ${slideOut} 1s forwards;
 
 `;
@@ -203,10 +222,11 @@ const cardColors = [
 ];
 const Card = styled.button`
   width:30%;
-
-  background-color: ${props => props.bgColor};
+  height: 100%;
+  background-color: ${props => props.$bgColor};
   display: flex;
   flex-direction: column;
+  align-items:center;
   border-radius: 2rem;
   border-style: none;
   padding: 4rem 3rem;

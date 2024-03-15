@@ -23,10 +23,6 @@ const HomeContent4 =()=>{
     return (
         <>
         <HomePageContainer2 opacity={style.opacity} $translateY={style.translateY}>
-          <DiscrpitionWrapper>
-            <Title>GenoDo is an innovative health management platform</Title>
-            <Discrpition>It is designed to empower individuals in their health and wellness journey. The app is divided into several key areas, each serving a unique purpose in the user's health exploration journey.</Discrpition>
-            </DiscrpitionWrapper>
             <TopHalfContainer>
             <Cards>
             <CardWarpper>
@@ -82,30 +78,7 @@ Intelligent Search Features: The central search bar with autocomplete functional
     );
     };
 
-const DiscrpitionWrapper = styled.div`
-display: flex;
-justify-content: center;
-height:30%;
-width:50%;
-align-items:center;
-text-align:center;
-flex-direction:column;
-padding-bottom:20rem;
 
-
-`
-const Title = styled.div`
-    font-size:4rem;
-    text-align:center;
-
-`
-const Discrpition = styled.div`
-    width:40%;
-    font-size:1.5rem;
-    text-align:center;
-    font-weight:normal;
-    padding-top:2rem;
-`
 const HomePageContainer2 = styled.div`
 
     font-family: 'poppins-bold', sans-serif !important;
@@ -113,14 +86,16 @@ const HomePageContainer2 = styled.div`
     display: flex;
     justify-content: center;
     flex-direction: column;
+    background-color: #A7BEAE;
+    box-sizing: border-box;
+    border-radius: 2rem;
     gap:5rem;
     align-items: center;
     height: 100%;
     z-index: 2;
     position:relative;
-    padding-top:20%;
 
-
+    padding-top:5rem;
 
     opacity: ${props => props.opacity};
     transform: translateY(${props => props.$translateY});
@@ -162,7 +137,7 @@ const CardContent = styled.div`
 
 const Card = styled.button`
   background-color: #B2DECA;
-  width: 45rem;
+  width: 50%;
   display: flex;
   flex-direction: column;
   border-radius: 2rem;
@@ -203,6 +178,7 @@ display:flex;
 flex-direction:row;
 gap:2rem;
 height:50%;
+padding-right:2rem;
 
 `
 const CenterTopCard = styled(Card)`
@@ -221,11 +197,13 @@ gap:2rem;
 
 `
 const RightCards = styled.div`
+  width:100%;
 `
 const RightCard = styled(Card)`
   display:flex;
   height:100%;
   background-color:#ABAEDB;
+  width:100%;
 
 `
 const Cards = styled.div`
