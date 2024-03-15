@@ -91,11 +91,11 @@ const HomePageContainer2 = styled.div`
     border-radius: 2rem;
     gap:5rem;
     align-items: center;
-    height: 100%;
+    height: 80vw;
     z-index: 2;
     position:relative;
 
-    padding-top:5rem;
+    padding-top:10rem;
 
     opacity: ${props => props.opacity};
     transform: translateY(${props => props.$translateY});
@@ -132,12 +132,14 @@ const Cardheading = styled.div`
 const CardContent = styled.div`
   font-size: 1.5rem;
   position: relative;
+  height:100%;
 
 `;
 
 const Card = styled.button`
   background-color: #B2DECA;
   width: 50%;
+  height:100%;
   display: flex;
   flex-direction: column;
   border-radius: 2rem;
@@ -162,14 +164,15 @@ const LeftCards = styled.div`
   flex-direction:row;
   gap:2rem;
   height:50%;
+  padding-right:2rem;
 
 `
 const LeftTopCard = styled(Card)`
-  width:55rem;
+  width:40%;
   background-color:#FBFDD2;
 `
 const LeftBottomCard = styled(Card)`
-  width:35rem;
+  width:60%;
   background-color:#B2DECA;
 
 `
@@ -182,11 +185,13 @@ padding-right:2rem;
 
 `
 const CenterTopCard = styled(Card)`
+width:60%;
 background-color:#F5A091;
 
 `
 const CenterBottomCard = styled(Card)`
 background-color:#A8DAF4;
+width:40%;
 
 `
 const CardWarpper = styled.div`

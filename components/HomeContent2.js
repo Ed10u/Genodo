@@ -17,7 +17,7 @@ const HomeContent2 =()=>{
     useEffect(() => {
       const handleScroll = () => {
         const shouldScrollDown = window.scrollY > 1500&&window.scrollY<2500;
-        const showContent1 = window.scrollY > 540&&window.scrollY<1200;
+        const showContent1 = window.scrollY > 640&&window.scrollY<1200;
         if (showContent1) {
           setStyle({ opacity: 1, translateY: '0px' });
         } else {
